@@ -1,0 +1,45 @@
+{
+  "name": "pianograph",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "heroku-postbuild": "npm install --production",
+    "local-start": "screen -dm nodemon --title='Node.JS - PianoGraph' ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "ejs": "~2.6.1",
+    "eslint": "^7.13.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.6",
+    "pg": "^8.5.0",
+    "pg-hstore": "^2.3.3",
+    "prettier": "^2.1.2",
+    "sequelize": "^6.3.5"
+  },
+  "description": "PianoGraph - Find Piano Scales Quickly and Easily!",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pixeljava/pianograph.git"
+  },
+  "keywords": [
+    "PianoGraph",
+    "piano",
+    "scale",
+    "scales"
+  ],
+  "author": "Jeremy Penning",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pixeljava/pianograph/issues"
+  },
+  "homepage": "https://github.com/pixeljava/pianograph#readme"
+}
