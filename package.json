@@ -5,14 +5,15 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "heroku-postbuild": "npm install --production",
-    "local-start": "screen -dm nodemon --title='Node.JS - PianoGraph' ./bin/www"
+    "local-start": "nodemon -r dotenv/config --title='Node.JS - PianoGraph' ./bin/www",
+    "local-start-bg": "screen -dm nodemon -r dotenv/config --title='Node.JS - PianoGraph' ./bin/www"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
-    "ejs": "~2.6.1",
-    "eslint": "^7.13.0",
+    "ejs": "^2.6.2",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "express": "~4.16.1",
@@ -41,5 +42,8 @@
   "bugs": {
     "url": "https://github.com/pixeljava/pianograph/issues"
   },
-  "homepage": "https://github.com/pixeljava/pianograph#readme"
+  "homepage": "https://github.com/pixeljava/pianograph#readme",
+  "devDependencies": {
+    "eslint": "^7.13.0"
+  }
 }

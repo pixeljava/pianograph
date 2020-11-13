@@ -1,34 +1,52 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const fs = require('fs');
+const bodyParser = require('body-parser');
+const path = require('path');
+const createError = require('http-errors');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const app = express();
 
-var app = express();
+// Database
+const db = require('./db/server');
+// Test the database connection...
+db.sequelize.authenticate()
+  // If the connection is up:
+  .then(console.log('Database connected...'))
+  // If the connection fails:
+  .catch(err => console.log(`Error: ${err}`));
 
-// view engine setup
+// View Engine Setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+// Error and Access Logging
+app.use(logger('dev', {
+  skip(req, res) { return res.statusCode < 400; },
+}));
+app.use(logger('combined', {
+  stream: fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+}));
 
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// Set static paths to server public resources
 app.use(express.static(path.join(__dirname, 'public')));
 
+const indexRouter = require('./routes/index');
+const rootnotesRouter = require('./routes/rootnotes');
+const scalesRouter = require('./routes/scales');
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/rootnotes', rootnotesRouter);
+app.use('/scales', scalesRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

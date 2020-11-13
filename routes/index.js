@@ -1,9 +1,14 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+const router = express.Router();
+
+// Render the 'index' view when the server base is requested
+router.get('/', (req, res) => {
+  res.render('index', {
+    // Some default data for the page
+    title: 'PianoGraph',
+    description: 'Find Piano Scales Easily!'
+  });
 });
 
 module.exports = router;
