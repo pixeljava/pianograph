@@ -1,0 +1,88 @@
+/*//////////////*/
+/* Piano Module */
+/*//////////////*/
+
+#piano {
+  clear: both;
+  width: 98vmax;
+  min-width: 435px;
+  height: 20vw;
+  box-shadow: /* X Y Blur Color */
+  0 .5vmin .5vmin rgba(0, 0, 0, .8);
+}
+
+#piano .keyHolder {
+  position: relative;
+  float: left;
+}
+
+#piano .key {
+  height: 20vh;
+  font-family: LeagueSpartanBold, sans-serif;
+  font-size: 2.5vw;
+  text-align: center;
+}
+#piano .key.white {
+  width: 7vw; /* ((100 - (2 * 1)) available width / 14 white keys ) */
+  height: 20vw; /* Fairly arbitrary for now, but it looks good :) */
+  position: relative;
+  background-color: ivory; /* Because... well, you know. */
+  color: black;
+  box-shadow: /* X Y Blur Color */
+    inset 0 -.10vmin .2vmin rgba(0, 0, 0, 0.95), /* Harsh Bottom Shadow */
+    inset 0 -.35vmin .5vmin rgba(0, 0, 0, 0.95), /* General Shadow */
+    inset 0 0 .1vmin rgba(0, 0, 0),              /* Border Shadow */
+    0 0 1vmin rgba(0, 0, 0, .5);                 /* Outer Shadow (Don't Change) */
+  z-index: 1;
+}
+#piano .key.white:hover {
+  box-shadow: 
+    inset 0 -.1vmin .05vmin rgba(0, 0, 0, 0.95), /* General Shadow */
+    inset 0 -.25vmin 2vmin rgba(0, 0, 0, 0.95),  /* General Shadow */
+    inset 0 0 .1vmin rgba(0, 0, 0),              /* Border Shadow */
+    0 0 1vmin rgba(0, 0, 0, .5);                 /* Outer Shadow (Don't Change) */
+  z-index: 0;
+}
+#piano .key.black {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  height: 10vw;
+  width: 6vw;
+  background-color: rgb(16, 16, 16);
+  color:ivory;
+  box-shadow: 
+    inset 0 -.5vmin .8vmin rgba(255, 255, 240, 0.5), /* White Key Reflection */
+    inset 0 -.2vmin .4vmin rgba(255, 255, 240, 0.2), /* White Key Reflection */
+    inset 0 0 .2vmin rgba(0, 0, 0),                  /* Border Shadow */
+    0 .6vmin .3vmin rgba(0, 0, 0, .9),            /* Outer Key Drop Shadow */
+    0 .8vmin .4vmin rgba(0, 0, 0, .8),            /* Outer Key Drop Shadow */
+    0 0 1vmin rgba(0, 0, 0, .5);             /* Outer Shadow (Match White) */
+  transform: translateX(-50%);
+  z-index: 3;
+}
+#piano .key.black:hover {
+background-color: black; 
+box-shadow: 
+  inset 0 -.35vmin 1vmin rgba(255, 255, 240, 0.35), /* White Key Reflection */
+  inset 0 -.75vmin 1.5vmin rgba(17, 17, 17, 0.4), /* White Key Reflection */
+  inset 0 0 .2vmin rgba(0, 0, 0),                    /* Border Shadow */
+    0 .4vmin .2vmin rgba(0, 0, 0, .9),           /* Outer Shadow (Pressed Down)*/
+    0 .6vmin .3vmin rgba(0, 0, 0, .7),           /* Outer Shadow (Pressed Down)*/
+    0 0 1vmin rgba(0, 0, 0, .5);                 /* Outer Shadow (Match White) */
+  z-index: 2;
+}
+#piano .key.white .keyLabel {
+  position: absolute;
+  bottom: 1vmin;
+  left: 40%;
+  text-align: center;
+  cursor: default;
+}
+#piano .key.black .keyLabel {
+  position: absolute;
+  bottom: 1vmin;
+  left: 30%;
+  text-align: center;
+  cursor: default;
+}

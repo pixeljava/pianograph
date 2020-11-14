@@ -29,7 +29,7 @@ router.get('/add', (req, res) => {
 
   const { title, wikiurl, wikipageid, binposition, numposition, removable } = data;
 
-  // Insert into the rootnotes table
+  // Insert all fields into the rootnotes table
   RootNote.create({
     title,
     wikiurl,
@@ -38,6 +38,7 @@ router.get('/add', (req, res) => {
     numposition,
     removable
   })
+    // Maybe remove the redirect if using it as an API
     .then((res_rootnote) => res.redirect('/rootnotes'))
     .catch(err => console.log(err));
 });

@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
   res.render('index', {
     // Some default data for the page
     title: 'PianoGraph',
-    description: 'Find Piano Scales Easily!'
+    description: 'Add a Scale'
   });
 });
 
