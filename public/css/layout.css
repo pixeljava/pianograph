@@ -1,24 +1,31 @@
-body > section {
-  margin: 1vw 1vw;
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/*//////////////
+/ Header & Nav /
+//////////////*/
 header {
-  font-family: LeagueSpartanBold, sans-serif;
-  width: 100vw;
-  height: 7vh;
-  background-color: rgb(0, 0, 0, .10);
+  width: 100%;
+  height: 50px;
+  min-width: 380px;
+  background-color: rgb(0, 0, 0, .13);
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
   cursor: default;
   z-index: 999;
 }
 
 header #headerText {
-  padding: .5vh 1vh;
+  padding: 4px 8px;
   float: left;
+  width: 330px;
   position: relative;
-  width: 63vw;
 }
 header #headerText #title {
-  font-size: 6.5vh;
+  font-family: LeagueSpartanBold, sans-serif;
+  font-size: 44px;
   letter-spacing: -.05em;
   text-align: left;
   display: inline;
@@ -26,48 +33,46 @@ header #headerText #title {
 }
 header #headerText #description {
   font-family: LeagueSpartanMedium, sans-serif;
-  font-size: 3vh;
+  font-size: 20px;
   text-align: right;
   white-space: nowrap;
   color: ivory;
   display: inline;
-  left: 31vh;
-  top: 4vh;
+  left: 212px;
+  top: 30px;
   position: absolute;
 }
 
 header #navMenuButton {
   outline: none;
   outline-offset: none;
-  height: 7vh;
-  width: 7vh;
+  height: 50px;
+  width: 50px;
   float: right;
   background-color: rgb(0, 0, 0, .20);
   color: ivory;
-  font-size: 5vh;
+  font-size: 40px;
 }
 header #navMenuButton:hover,
 header #navMenuButton:focus,
 header #navMenuButton.open:hover,
 header #navMenuButton.open:focus {
   outline: 1px solid #fff;
-  outline-offset: -.75vmin;
+  outline-offset: -6px;
 }
 header #navMenuButton:active,
 header #navMenuButton.open {
   outline: none;
-  outline-offset: none;
   box-shadow: /* X Y Blur Color */
-  inset 0 0 .25vmin rgba(0, 0, 0, 0.75),
-  inset 0 0 .75vmin rgb(0, 0, 0, .9);
+    inset 0 0 .25vmin rgba(0, 0, 0, 0.75),
+    inset 0 0 .75vmin rgb(0, 0, 0, .9);
 }
-
 
 nav#navMenu {
   display: none;
   font-family: LeagueSpartanBold, sans-serif;
   position: absolute;
-  top: 7vh;
+  top: 50px;
   right: 0;
   width: 100%;
   min-width: 200px;
@@ -82,18 +87,144 @@ nav#navMenu ul {
   border-top: 1px solid rgb(36, 36, 36);
   box-shadow: /* X Y Blur Color */
     -.1vmin 1vmin 1vmin rgba(0, 0, 0, 0.8);
+  cursor: pointer;
 }
 nav#navMenu ul li {
   position: relative;
   height: 10vh;
-  padding-top: 4vh;
-  text-align: center;
+  min-height: 50px;
+  max-height: 80px;
+  /* text-align: center; */
+  color: ivory;
+  border-bottom: 1px solid rgb(36, 36, 36);
+  border-left: 1px solid rgb(36, 36, 36);
+  box-shadow: /* X Y Blur Color */
+    inset 0 0 4.5px rgba(255, 255, 240, 0.5),
+    inset 0 0 .65px rgb(0, 0, 0);
+}
+nav#navMenu ul li:hover {
   color: white;
   border-bottom: 1px solid rgb(36, 36, 36);
   border-left: 1px solid rgb(36, 36, 36);
   box-shadow: /* X Y Blur Color */
-    inset 0 0 .25vmin rgba(255, 255, 255, 0.5),
-    inset 0 0 .5vmin rgb(0, 0, 0);
+    inset 0 0 9px rgba(255, 255, 240, 0.8),
+    inset 0 0 .65px rgb(0, 0, 0);
+}
+
+/*///////////////
+/ Footer Styles /
+///////////////*/
+
+footer {
+  width: 100%;
+  min-height: 20px;
+  min-width: 380px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 240, .75);
+  font-family: LeagueSpartanMedium, sans-serif;
+  font-size: 12px;
+  position: absolute;
+  bottom: 0;
+}
+footer #footerText {
+  float: left;
+  padding: 4px;
+}
+footer #footerLinks {
+  font-family: LeagueSpartanLight, sans-serif;
+  float: right;
+  font-size: 12px;
+  height: 20px;
+  white-space: nowrap;
+}
+footer #footerLinks .footerLink {
+  float: left;
+}
+footer #footerLinks .footerLink img {
+  float: left;
+  padding: 2px;
+}
+footer #footerLinks .footerLink p {
+  float: left;
+  display: block;
+  padding: 5px 8px 3px 3px;
+}
+/*///////////////
+/ Content Boxes /
+///////////////*/
+section.contentBox {
+  font-family: LeagueSpartanLight, sans-serif;
+  width: 100%;
+  padding: 4px 8px;
+  min-width: 380px;
+  z-index: 0;
+}
+section.contentBox .boxHead {
+  font-family: LeagueSpartanMedium, sans-serif;
+  padding: .5vh .4vh .2vh;
+  background-color: rgba(0, 0, 0, .3);
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+section.contentBox .boxTitle {
+  color: rgba(255, 255, 255, .75);
+  text-transform: uppercase;
+  font-size: max(2.25vw, 8.4375px);
+}
+
+section.contentBox .boxContent {
+  background-color: rgb(0, 0, 0, .1);
+  border: 1px solid rgba(0, 0, 0, .1);
+  padding: 1vh;
+  max-height: 100px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.3) rgba(255, 255, 240, 0.3);
+}
+
+/* Works on Chrome/Edge/Safari */
+section.contentBox .boxContent::-webkit-scrollbar {
+  width: 8px;
+}
+section.contentBox .boxContent::-webkit-scrollbar-track {
+  background: rgba(255, 255, 240, .3);
+}
+section.contentBox .boxContent::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, .3);
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, .3);
+}
+/*///////////////
+/ Forms - Input /
+///////////////*/
+form {
+  font-size: 0; /* Remove whitespace between elements */
+}
+input {
+  appearance: none; /* Reset browser styles */
+  height: 2.4vmin;
+  min-height: 20px;
+  padding: .2vw .4vw 0;
+  margin: 0;
+  font-family: LeagueSpartanLight, sans-serif;
+  font-size: 2vmin;
+  background-color: rgba(255, 255, 255, .25);
+  border: 1px solid rgba(0, 0, 0, .4);
+}
+
+label {
+  height: 2.4vmin;
+  min-height: 20px;
+  padding: .4vw .8vw .2vw .4vw;
+  margin: 0;
+  white-space: nowrap;
+  font-family: LeagueSpartanMedium, sans-serif;
+  text-transform: uppercase;
+  font-size: 1.8vmin;
+  line-height: 3vmin; /* The space (vertically) between form elements */
+  background-color: rgba(0, 0, 0, .25);
+  border: 1px solid rgba(0, 0, 0, .25);
+  color: rgba(255, 255, 255, .75);
+  border: none;
 }
 
 @media (min-width: 800px) {

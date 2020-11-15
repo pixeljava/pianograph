@@ -30,7 +30,8 @@ app.use(logger('combined', {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // Set static paths to server public resources
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/partials', express.static(path.join(__dirname, '/views/partials/')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 const indexRouter = require('./routes/index');
 const rootnotesRouter = require('./routes/rootnotes');

@@ -33,13 +33,14 @@ html {
 
 body {
   background-color: rgb(32, 132, 232);
-  font-family: LeagueSpartanLight, san-serif;
+  font-family: LeagueSpartanLight, sans-serif;
+  font-size: 100%;
   margin: 0;
   padding: 0;
 }
 
 /*
-    Button Reset from Chris Coyier
+    Button Reset from Chris Coyier - Adapted
     https://css-tricks.com/overriding-default-button-styles/
 */
 button {
