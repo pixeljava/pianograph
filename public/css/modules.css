@@ -57,7 +57,7 @@
     /* General Shadow */
     inset 0 max(-.1vmin, -.375px) max(.5vmin, 1.88px) rgba(0, 0, 0, 0.95),
     /* General Shadow */
-    inset 0 max(-.25vmin, -.9375px) max(-.25vmin, -.9375px) max(2vmin, 7.5px) rgba(0, 0, 0, 0.95),
+    inset 0 max(-.25vmin, -.9375px) max(2vmin, 7.5px) rgba(0, 0, 0, 0.95),
     /* Border Shadow */
     inset 0 0 max(.1vmin, .375px) rgba(0, 0, 0),
     /* Outer Shadow */
@@ -92,15 +92,15 @@ background-color: black;
 z-index: 2;
 box-shadow: /* X Y Blur Color */
   /* White Key Reflection */
-  inset 0 max(-.35vmin, -1.3125) max(1vmin, 3.75px) rgba(255, 255, 240, 0.35),
+  inset 0 max(-.35vmin, -1.3125px) max(1vmin, 3.75px) rgba(255, 255, 240, 0.35),
   /* White Key Reflection */ 
-  inset 0 max(-.75vmin, -2.8125) max(1.5vmin, 5.625px) rgba(17, 17, 17, 0.4),
+  inset 0 max(-.75vmin, -2.8125px) max(1.5vmin, 5.625px) rgba(17, 17, 17, 0.4),
   /* Border Shadow */
-  inset 0 0 max(.2vmin, .75px) rgba(0, 0, 0),
+  inset 0 0 max(.2vmin, 0.75px) rgba(0, 0, 0),
   /* Outer Shadow (Pressed Down)*/
-  0 max(.4vmin, 1.5px) .2vmin rgba(0, 0, 0, .9),
+  0 max(.4vmin, 1.5px) max(.2vmin, .75px) rgba(0, 0, 0, .9),
   /* Outer Shadow (Pressed Down)*/
-  0 max(.6vmin, 2.25px) .3vmin rgba(0, 0, 0, .7),
+  0 max(.6vmin, 2.25px) max(.3vmin, 1.125px) rgba(0, 0, 0, .7),
   /* Outer Shadow (Match White) */
   0 0 max(1vmin, 3.75px) rgba(0, 0, 0, .5);
 }
