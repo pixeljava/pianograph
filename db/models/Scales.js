@@ -22,9 +22,14 @@ const Scales = db.sequelize.define('scales', {
     allowNull: false,
     unique: true
   },
-  removable: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false
+  rootnoteId: {
+    type: Sequelize.INTEGER,
+    onDelete: "CASCADE",
+    references: {
+      model: "root_notes",
+      key: "id",
+      as: "rootnoteId",
+    },
   }
 }, {
   Sequelize,

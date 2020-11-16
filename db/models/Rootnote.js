@@ -21,10 +21,6 @@ const RootNote = db.sequelize.define('root_notes', {
     type: Sequelize.INTEGER,
     allowNull: false,
     unique: true
-  },
-  removable: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false
   }
 }, {
   Sequelize,

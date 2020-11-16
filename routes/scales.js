@@ -1,18 +1,21 @@
 const express = require('express');
-const db = require('../db/server');
-const RootNote = require('../db/models/Rootnote');
-const Scales = require('../db/models/Scales');
 
 const router = express.Router();
 
-// Render the 'scales' view when accessing <host>/scales/
+// Get the main scales page
 router.get('/', (req, res) => {
-  Scales.findAll()
-    .then(scales => {
-      console.log(scales);
-      res.send(scales);
-    })
-    .catch(err => console.log(err));
+  res.render('scales',  {
+    app_title: 'PianoGraph',
+    page_description: 'Root Notes',
+  });
+});
+
+// Get the add scales page
+router.get('/add', (req, res) => {
+  res.render('add_scale',  {
+    app_title: 'PianoGraph',
+    page_description: 'Add a Scale',
+  });
 });
 
 module.exports = router;

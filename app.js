@@ -1,6 +1,6 @@
 const express = require('express');
 const fs = require('fs');
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 const path = require('path');
 const createError = require('http-errors');
 const logger = require('morgan');
@@ -19,6 +19,7 @@ db.sequelize.authenticate()
 // View Engine Setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
 // Error and Access Logging
 app.use(logger('dev', {
   skip(req, res) { return res.statusCode < 400; },
@@ -33,13 +34,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/partials', express.static(path.join(__dirname, '/views/partials/')));
 app.use(express.static(path.join(__dirname, '/public')));
 
+// Page Routes
 const indexRouter = require('./routes/index');
+const aboutRouter = require('./routes/about');
 const rootnotesRouter = require('./routes/rootnotes');
 const scalesRouter = require('./routes/scales');
-
 app.use('/', indexRouter);
+app.use('/about', aboutRouter);
 app.use('/rootnotes', rootnotesRouter);
 app.use('/scales', scalesRouter);
+// API Routes
+const pg_rootnotesAPI = require('./controllers/api_rootnotes');
+const pg_scalesAPI = require('./controllers/api_scales');
+app.use('/api/rootnotes', pg_rootnotesAPI);
+app.use('/api/scales', pg_scalesAPI);
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

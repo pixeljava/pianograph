@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <%- include('./partials/page.head.ejs') %>
+  <body>
+    <header>
+      <%- include('./partials/header.ejs') %>
+    </header>
+    <section class="contentBox">
+      <%- include('./partials/piano.ejs') %>
+    </section>
+    <section class="contentBox">
+      <div class="boxHead">
+        <p class="boxTitle">Enter Scale Info and Click "Save"</p>
+      </div>
+      <section class="boxContent">
+        <form>
+          <div class="formInput">
+            <label for="title">Scale Name:</label>
+            <input type="text" id="title" placeholder="Enter scale name..." name="title">
+          </div>
+          <br />
+          <div class="formInput">
+            <label for="binposition">Binary Representation:</label>
+            <input type="text" id="binposition" placeholder="Enter binary..." name="binposition">
+          </div>
+          <br />
+          <div class="formInput">
+            <label for="numposition">Numerical Representation:</label>
+            <input type="text" id="numposition" placeholder="Enter number..." name="numposition">
+          </div>
+          <br />
+          <div class="formInput">
+            <label for="wikiurl">Wikipedia Link:</label>
+            <input type="text" id="wikiurl" placeholder="Enter URL..." name="wikiurl">
+          </div>
+          <br />
+          <div class="formInput">
+            <label for="wikipageid">Wikipedia Page Id:</label>
+            <input type="text" id="wikipageid" placeholder="Enter id..." name="wikipageid">
+          </div>
+          <br />
+          <button type="submit">Save</button>
+        </form>
+      </section>
+    </section>
+    <footer>
+      <%- include('./partials/footer.ejs') %>
+    </footer>
+  </body>
+</html>

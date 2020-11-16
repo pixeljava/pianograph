@@ -116,7 +116,7 @@ nav#navMenu ul {
     -.1vmin 1vmin 1vmin rgba(0, 0, 0, 0.8);
   cursor: pointer;
 }
-nav#navMenu ul li {
+nav#navMenu ul li a {
   position: relative;
   height: 10vh;
   min-height: 50px;
@@ -129,7 +129,7 @@ nav#navMenu ul li {
     inset 0 0 4.5px rgba(255, 255, 240, 0.5),
     inset 0 0 .65px rgb(0, 0, 0);
 }
-nav#navMenu ul li:hover {
+nav#navMenu ul li a:hover {
   color: white;
   border-bottom: 1px solid rgb(36, 36, 36);
   border-left: 1px solid rgb(36, 36, 36);
@@ -203,19 +203,21 @@ section.contentBox .boxContent {
   background-color: rgb(0, 0, 0, .13);
   border: 1px solid rgba(0, 0, 0, .13);
   padding: max(1vh, 3.75px);
-  max-height: 250px;
+}
+section.contentBox .boxContent.scrollBox {
+  max-height: 500px;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.3) rgba(255, 255, 240, 0.3);
 }
 /* Works on Chrome/Edge/Safari */
-section.contentBox .boxContent::-webkit-scrollbar {
+section.contentBox .boxContent.scrollBox::-webkit-scrollbar {
   width: 8px;
 }
-section.contentBox .boxContent::-webkit-scrollbar-track {
+section.contentBox .boxContent.scrollBox::-webkit-scrollbar-track {
   background: rgba(255, 255, 240, .3);
 }
-section.contentBox .boxContent::-webkit-scrollbar-thumb {
+section.contentBox .boxContent.scrollBox::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, .3);
   border-radius: 2px;
   border: 1px solid rgba(0, 0, 0, .3);
@@ -253,6 +255,7 @@ label {
   float: left;
   margin: 0;
   height: 100%;
+  width: max(31.2vmin, 117px);
   padding: max(1.125vw, 4.21875px) max(1.6vw, 4px) max(1.125vw, 4.21875px);
   font-family: LeagueSpartanMedium, sans-serif;
   /* text-transform: uppercase; */
