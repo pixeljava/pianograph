@@ -104,3 +104,124 @@ box-shadow: /* X Y Blur Color */
   /* Outer Shadow (Match White) */
   0 0 max(1vmin, 3.75px) rgba(0, 0, 0, .5);
 }
+
+#piano .key.down{
+  background-color: salmon;
+}
+
+
+/*//////////////*/
+/* Modal Module */
+/*//////////////*/
+/* Adapted to use responsive design from 
+// http://www.jacklmoore.com/notes/jquery-modal-tutorial/ */
+
+#overlay {
+  position:fixed; 
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#000;
+  opacity:0.7;
+  filter:alpha(opacity=70);
+  z-index: 996;
+}
+
+#modal {
+  position:absolute;
+  background:url(../img/tint50.png) 0 0 repeat;
+  background:rgba(0,0,0,0.5);
+  border-radius: max(4.8vmin, 18px);
+  padding: max(1.2vmin, 4.5px);
+  z-index: 997
+}
+
+#modalContent {
+  font-size: max(4.8vmin, 18px);
+  border-radius: max(4.8vmin, 18px);
+  background: ivory;
+  padding: max(4.8vmin, 18px);
+  height: 100%;
+  z-index: 998;
+}
+
+#modal #modalHeader {
+  font-family: LeagueSpartanBold, sans-serif;
+  font-size: max(4vw, 15px);
+  margin-bottom: max(1.2vmin, 4.5px);
+}
+#modal #modalText {
+  font-family: LeagueSpartanLight, sans-serif;
+  font-size: max(3.2vw, 12px);
+}
+
+/* 
+<button id="modalConfirm" class="modalButton" title="Delete ${noteTitle}">
+<i class="fas fa-trash-alt"></i> Delete
+</button>
+<button id="modalCancel" class="modalButton" title="Cancel">
+<i class="fas fa-times-circle"></i> Cancel
+</button>
+*/
+
+#modal button.modalButton {
+  margin-top: max(10vmin, 37.5px);
+  margin-right: 1ch;
+  padding: max(1.2vmin, 4.5px);
+  background-color: rgba(0, 0, 0, .75);
+  border: 1px solid rgba(0, 0, 0, .95);
+  border-radius: max(1vmin, 3.75px);
+  font-size: max(3.2vw, 12px);
+  color: ivory;
+  transition: background-color .2s ease-in;
+}
+
+#modal button.modalButton.red {
+  background-color: rgb(196, 50, 28);
+  color: white; /* AA 5.50 */
+}
+#modal button.modalButton.yellow {
+  background-color: rgb(223, 183, 23);
+  color: black; /* AAA 10.92 */
+}
+#modal button.modalButton.green {
+  background-color: rgb(33, 150, 83);
+  color: black; /* AA 5.55 */
+}
+#modal button.modalButton.blue {
+  background-color: rgb(32, 138, 232);
+  color: black; /* AA 5.86 */
+}
+#modal button.modalButton.grey {
+  background-color: rgba(0, 0, 0, .15);
+  color: black; /* AAA 14.75 */
+}
+#modal button.modalButton.right { 
+  float: right;
+} 
+#modal button.modalButton.right:last-child { 
+  margin-right: 0;
+} 
+#modal button.modalButton:hover,
+#modal button.modalButton:focus {
+  outline: none;
+  box-shadow: /* X Y Blur Color */
+    inset 0px 0px max(1vmin, 3.75px) rgba(0, 0, 0, .75);
+  border: 1px solid rgba(0, 0, 0, .8);
+}
+
+#modalClose {
+  background-color: rgb(255, 255, 240);
+  border-radius: max(7vmin, 26.25px); /* ((width|height) / 2) */
+  border: max(1.25vmin, 4.6875px) solid ivory; /* ((width|height - font-size) / 2) */
+  color: black;
+  position: absolute;
+  font-size: max(11.5vmin, 43.125px); /* ((width|height - (border / 2)) */
+  width: max(14vmin, 52.5px);
+  height: max(14vmin, 52.5px);
+  display: block;
+  top: max(-3.5vmin, -13.125px); /* -(width|height / 4) */
+  right: max(-3.5vmin, -13.125px); /* -(width|height / 4) */
+  z-index: 999;
+}

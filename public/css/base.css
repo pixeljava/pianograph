@@ -3,21 +3,21 @@
 
 @font-face {
   font-family: 'LeagueSpartanBold';
-  src: url('../font/WOFF2/LeagueSpartan-Bold.woff2') format('woff2'),
-       url('../font/WOFF/LeagueSpartan-Bold.woff') format('woff'),
-       url('../font/TTF/LeagueSpartan-Bold.ttf') format('truetype');
+  src: url('../font/league-spartan/LeagueSpartan-Bold.woff2') format('woff2'),
+       url('../font/league-spartan/LeagueSpartan-Bold.woff') format('woff'),
+       url('../font/league-spartan/LeagueSpartan-Bold.ttf') format('truetype');
 }
 @font-face {
   font-family: 'LeagueSpartanMedium';
-  src: url('../font/WOFF2/LeagueSpartan-Medium.woff2') format('woff2'),
-       url('../font/WOFF/LeagueSpartan-Medium.woff') format('woff'),
-       url('../font/TTF/LeagueSpartan-Medium.ttf') format('truetype');
+  src: url('../font/league-spartan/LeagueSpartan-Medium.woff2') format('woff2'),
+       url('../font/league-spartan/LeagueSpartan-Medium.woff') format('woff'),
+       url('../font/league-spartan/LeagueSpartan-Medium.ttf') format('truetype');
 }
 @font-face {
   font-family: 'LeagueSpartanLight';
-  src: url('../font/WOFF2/LeagueSpartan-Light.woff2') format('woff2'),
-       url('../font/WOFF/LeagueSpartan-Light.woff') format('woff'),
-       url('../font/TTF/LeagueSpartan-Light.ttf') format('truetype');
+  src: url('../font/league-spartan/LeagueSpartan-Light.woff2') format('woff2'),
+       url('../font/league-spartan/LeagueSpartan-Light.woff') format('woff'),
+       url('../font/league-spartan/LeagueSpartan-Light.ttf') format('truetype');
 }
 
 * {
@@ -29,6 +29,21 @@ html {
   /* min-width: 435px !important;
   max-width: 960px !important; */
   display: block;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.3) rgba(255, 255, 240, 0.3);
+}
+/* Works on Chrome/Edge/Safari */
+html::-webkit-scrollbar {
+  width: 8px;
+}
+html::-webkit-scrollbar-track {
+  background: rgba(255, 255, 240, .3);
+}
+html::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, .3);
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, .3);
 }
 
 body {
@@ -59,4 +74,14 @@ button {
               transform 150ms ease;
   -webkit-appearance: none;
   -moz-appearance: none;
+}
+
+/* General Text Styles */
+strong {
+  font-family: 'LeagueSpartanMedium', sans-serif;
+  font-weight: bold;
+}
+strong.really {
+  font-family: 'LeagueSpartanBold', sans-serif;
+  font-weight: bold;
 }
