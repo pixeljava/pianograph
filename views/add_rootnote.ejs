@@ -10,44 +10,58 @@
     </section>
     <section class="contentBox">
       <div class="boxHead">
-        <p class="boxTitle">Enter Root Note Info and Click "Save"</p>
+        <p class="boxTitle">Add a Root Note</p>
+        <br style="clear: both;" />
       </div>
       <section class="boxContent">
-        <div id="errorMessages">
-          <pre></pre>
+        <div class="noteHolder">
+          <div class="formHolder">
+            <div class="errorMessages"></div>
+            <div class="addForm">
+              <form>
+                <div class="formInput">
+                  <label for="title">Note Name:</label>
+                  <input type="text" id="title-${noteData.id}" placeholder="Enter note name..."
+                          name="title" value="${noteData.title}" maxlength="5" required>
+                </div>
+                <br />
+                <div class="formInput">
+                  <label for="binposition">Binary Representation:</label>
+                  <input type="text" id="binposition-${noteData.id}" placeholder="Enter binary..."
+                          name="binposition" value="${noteData.binposition}" maxlength="24" required>
+                </div>
+                <br />
+                <div class="formInput">
+                  <label for="numposition">Numerical Representation:</label>
+                  <input type="text" id="numposition-${noteData.id}" placeholder="Enter number..."
+                          name="numposition" value="${noteData.numposition}" maxlength="7" required>
+                </div>
+                <br />
+                <div class="formInput">
+                  <label for="wikiurl">Wikipedia Link:</label>
+                  <input type="text" id="wikiurl-${noteData.id}" placeholder="Enter URL..."
+                          name="wikiurl" value="${noteData.wikiurl}" maxlength="100" required>
+                </div>
+                <br />
+                <div class="formInput">
+                  <label for="wikipageid">Wikipedia Page Id:</label>
+                  <input type="text" id="wikipageid-${noteData.id}" placeholder="Enter id..."
+                          name="wikipageid" value="${noteData.wikipageid}" maxlength="10">
+                </div>
+                <br />
+                <button class="saveButton" id="saveNote-${noteData.id}" data-note-id="${noteData.id}" 
+                        type="button"><i class="far fa-save"></i> Save</button>
+                <button class="cancelButton" id="cancelUpdate-${noteData.id}" data-note-id="${noteData.id}"
+                        type="button"><i class="fas fa-times-circle"></i> Cancel</button>
+              </form>
+            </div>
+          </div>
         </div>
-        <form action="/rootnotes/add/">
-          <div class="formInput">
-            <label for="title">Note Name:</label>
-            <input type="text" id="title" placeholder="Enter note name..." name="title">
-          </div>
-          <br />
-          <div class="formInput">
-            <label for="binposition">Binary Representation:</label>
-            <input type="text" id="binposition" placeholder="Enter binary..." name="binposition">
-          </div>
-          <br />
-          <div class="formInput">
-            <label for="numposition">Numerical Representation:</label>
-            <input type="text" id="numposition" placeholder="Enter number..." name="numposition">
-          </div>
-          <br />
-          <div class="formInput">
-            <label for="wikiurl">Wikipedia Link:</label>
-            <input type="text" id="wikiurl" placeholder="Enter URL..." name="wikiurl">
-          </div>
-          <br />
-          <div class="formInput">
-            <label for="wikipageid">Wikipedia Page Id:</label>
-            <input type="text" id="wikipageid" placeholder="Enter id..." name="wikipageid">
-          </div>
-          <br />
-          <button type="submit"><i class="far fa-save"></i>Save</button>
-        </form>
       </section>
     </section>
     <footer>
       <%- include('./partials/footer.ejs') %>
     </footer>
+    <!-- <script src="/js/add_rootnote.js" type="text/javascript"></script> -->
   </body>
 </html>

@@ -38,7 +38,7 @@
 #piano .key.white {
   height: max(20vw, 75px);
   position: relative;
-  background-color: ivory; /* This felt sooooo right... */
+  background-color: ivory; /* This just felt sooooo right... */
   color: black;
   z-index: 1;
   box-shadow: /* X Y Blur Color */
@@ -116,7 +116,7 @@ box-shadow: /* X Y Blur Color */
 /*//////////////*/
 /* Modal Module */
 /*//////////////*/
-/* Adapted to use responsive design from 
+/* Adapted by Jeremy Penning to use responsive design from code at:
 // http://www.jacklmoore.com/notes/jquery-modal-tutorial/ */
 
 #overlay {
@@ -158,15 +158,6 @@ box-shadow: /* X Y Blur Color */
   font-family: LeagueSpartanLight, sans-serif;
   font-size: max(3.2vw, 12px);
 }
-
-/* 
-<button id="modalConfirm" class="modalButton" title="Delete ${noteTitle}">
-<i class="fas fa-trash-alt"></i> Delete
-</button>
-<button id="modalCancel" class="modalButton" title="Cancel">
-<i class="fas fa-times-circle"></i> Cancel
-</button>
-*/
 
 #modal button.modalButton {
   margin-top: max(10vmin, 37.5px);

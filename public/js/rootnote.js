@@ -1,5 +1,4 @@
 $( document ).ready(function() {
-  const xhrAddNote = '/api/rootnotes/add'; // POST a new note
   const xhrGetNotes = '/api/rootnotes'; // GET all root notes
   const xhrUpdateNote = '/api/rootnotes/update'; // PUT note {id}
   const xhrDeleteNote = '/api/rootnotes/remove'; // DELETE note {id}
@@ -23,9 +22,9 @@ $( document ).ready(function() {
         <p><strong>Wikipedia PageId: </strong>${noteData.wikipageid}</p>
         <p><strong>PianoGraph: </strong>${noteData.binposition} (${noteData.numposition})</p>
       </div>
-      <div class="updateForm">
+      <section class="formHolder">
         <div class="errorMessages"></div>
-        <div class="formHolder">
+        <div class="updateForm">
           <form>
             <div class="formInput">
               <label for="title">Note Name:</label>
@@ -58,12 +57,12 @@ $( document ).ready(function() {
             </div>
             <br />
             <button class="saveButton" id="saveNote-${noteData.id}" data-note-id="${noteData.id}" 
-                    type="button"><i class="far fa-save"></i> Save</button>
+                    type="button" title="Save"><i class="far fa-save"></i> Save</button>
             <button class="cancelButton" id="cancelUpdate-${noteData.id}" data-note-id="${noteData.id}"
-                    type="button"><i class="fas fa-times-circle"></i> Cancel</button>
+                    type="button" title="Cancel"><i class="fas fa-times-circle"></i> Cancel</button>
           </form>
         </div>
-      </div>
+      </section>
       <div class="bottomButtons">
         <button class="viewButton" id="viewNote-${noteData.id}" data-numposition="${noteData.numposition}" title="View Note">
           <i class="fas fa-music"></i> View
@@ -85,6 +84,12 @@ $( document ).ready(function() {
   
   // initData contains a copy of the response model from a GET operation.
   const initNoteButtonHandlers = (initData) => {
+    // Help Close Button
+    $('div.closeHelp').off().on('click', function (e) {
+      localStorage.setItem('showHelp',false);
+      const pageHelp = $('section.pageHelp');
+      pageHelp.hide();
+    });
     // Event handlers for the updateForm buttons
     $(`button#saveNote-${initData.id}:button`).off().on('click', function (e) {
       const noteId = $(this).data('noteId');
@@ -105,7 +110,7 @@ $( document ).ready(function() {
       const note = $(`div#note-${noteId}`);
       const errorMessages = $(note).find('div.errorMessages');
       const bottomButtons = $(note).find('div.bottomButtons');
-      const updateFormHolder = $(note).find('div.updateForm');
+      const formHolder = $(note).find('div.updateForm');
       const updateForm = $(note).find('div.updateForm form');
       const inputFields = $(updateForm).find(':input');
       // Grab all data attributes from note to reset the form
@@ -119,7 +124,7 @@ $( document ).ready(function() {
       errorMessages.hide();
       // Show the bottom buttons, hide the form
       bottomButtons.toggle();
-      updateFormHolder.slideToggle(250);
+      formHolder.slideToggle(250);
     });
 
     // Event handlers for noteHolder buttons
@@ -140,10 +145,10 @@ $( document ).ready(function() {
     $(`button#update-${initData.id}:button`).off().on('click', function (e) {
       const noteId = $(this).data('noteId');
       const note = $(`div#note-${noteId}`);
-      const updateForm = $(note).find('div.updateForm');
+      const formHolder = $(note).find('div.updateForm');
       const bottomButtons = $(note).find('div.bottomButtons');
       bottomButtons.toggle();
-      updateForm.slideToggle(250);
+      formHolder.slideToggle(250);
     });
     $(`button#delete-${initData.id}:button`).off().on('click', function (e) {
       const noteId = $(this).data('noteId');
@@ -289,6 +294,22 @@ $( document ).ready(function() {
 
   // Run all of the code that should execute automatically when the page loads.
   const readySetLoad = () => {
+    const pageHelp = $('section.pageHelp');
+    // Get the localStorage value of showHelp to see if the help should remain hidden.
+    // Of course only strings can be stored in localStorage right now, so the logic looks bad...
+    // ...or there's a better way to write it. Either/or.
+    let showHelp = localStorage.getItem('showHelp');
+    if (showHelp === null) {
+      console.log(`null: ${showHelp}`);
+      localStorage.setItem('showHelp',true);
+      pageHelp.show();
+    } else if (showHelp === 'true') {
+      console.log(`true: ${showHelp}`);
+      pageHelp.show();
+    } else if (showHelp === 'false') {
+      console.log(`false: ${showHelp}`);
+      pageHelp.hide();
+    }    
     initPiano(); // Set click handlers to each piano key.
     doGetNotes(); // Just run this automatically once the document is ready...
   };
