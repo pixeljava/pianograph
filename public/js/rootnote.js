@@ -1,6 +1,6 @@
 $( document ).ready(function() {
-  const xhrAddNote = '/api/rootnotes/add/'; // POST a new note
-  const xhrGetNotes = '/api/rootnotes/'; // GET all root notes
+  const xhrAddNote = '/api/rootnotes/add'; // POST a new note
+  const xhrGetNotes = '/api/rootnotes'; // GET all root notes
   const xhrUpdateNote = '/api/rootnotes/update'; // PUT note {id}
   const xhrDeleteNote = '/api/rootnotes/remove'; // DELETE note {id}
 
@@ -12,11 +12,170 @@ $( document ).ready(function() {
     }
     return returnArray;
   }
+
+  let rootNoteTemplate = (noteData) => `
+    <div id="note-${noteData.id}" class="noteHolder" data-id="${noteData.id}" data-title="${noteData.title}"
+          data-wikiurl="${noteData.wikiurl}" data-wikipageid="${noteData.wikipageid}"
+          data-binposition="${noteData.binposition}" data-numposition="${noteData.numposition}">
+      <h1 class="noteTitle">Note: ${noteData.title}</h1>
+      <div class="noteInfo">
+        <p><strong>Wikipedia URL: </strong><a target="_blank" href="${noteData.wikiurl}">${noteData.wikiurl}</a></p>
+        <p><strong>Wikipedia PageId: </strong>${noteData.wikipageid}</p>
+        <p><strong>PianoGraph: </strong>${noteData.binposition} (${noteData.numposition})</p>
+      </div>
+      <div class="updateForm">
+        <div class="errorMessages"></div>
+        <div class="formHolder">
+          <form>
+            <div class="formInput">
+              <label for="title">Note Name:</label>
+              <input type="text" id="title-${noteData.id}" placeholder="Enter note name..."
+                      name="title" value="${noteData.title}" maxlength="5" required>
+            </div>
+            <br />
+            <div class="formInput">
+              <label for="binposition">Binary Representation:</label>
+              <input type="text" id="binposition-${noteData.id}" placeholder="Enter binary..."
+                      name="binposition" value="${noteData.binposition}" maxlength="24" required>
+            </div>
+            <br />
+            <div class="formInput">
+              <label for="numposition">Numerical Representation:</label>
+              <input type="text" id="numposition-${noteData.id}" placeholder="Enter number..."
+                      name="numposition" value="${noteData.numposition}" maxlength="7" required>
+            </div>
+            <br />
+            <div class="formInput">
+              <label for="wikiurl">Wikipedia Link:</label>
+              <input type="text" id="wikiurl-${noteData.id}" placeholder="Enter URL..."
+                      name="wikiurl" value="${noteData.wikiurl}" maxlength="100" required>
+            </div>
+            <br />
+            <div class="formInput">
+              <label for="wikipageid">Wikipedia Page Id:</label>
+              <input type="text" id="wikipageid-${noteData.id}" placeholder="Enter id..."
+                      name="wikipageid" value="${noteData.wikipageid}" maxlength="10">
+            </div>
+            <br />
+            <button class="saveButton" id="saveNote-${noteData.id}" data-note-id="${noteData.id}" 
+                    type="button"><i class="far fa-save"></i> Save</button>
+            <button class="cancelButton" id="cancelUpdate-${noteData.id}" data-note-id="${noteData.id}"
+                    type="button"><i class="fas fa-times-circle"></i> Cancel</button>
+          </form>
+        </div>
+      </div>
+      <div class="bottomButtons">
+        <button class="viewButton" id="viewNote-${noteData.id}" data-numposition="${noteData.numposition}" title="View Note">
+          <i class="fas fa-music"></i> View
+        </button>
+        <button class="scalesButton" id="viewScales-${noteData.id}" data-note-id="${noteData.id}" title="View Scales">
+          <i class="fas fa-list-ul"></i> Scales
+        </button>
+        <div class="right">
+          <button class="updateButton" id="update-${noteData.id}" data-note-id="${noteData.id}" title="Update Note">
+            <i class="fas fa-pencil-alt"></i> Update
+          </button>
+          <button class="deleteButton" id="delete-${noteData.id}" data-note-id="${noteData.id}" title="Delete Note">
+            <i class="fas fa-trash-alt"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
   
+  // initData contains a copy of the response model from a GET operation.
+  const initNoteButtonHandlers = (initData) => {
+    // Event handlers for the updateForm buttons
+    $(`button#saveNote-${initData.id}:button`).off().on('click', function (e) {
+      const noteId = $(this).data('noteId');
+      const note = $(`div#note-${noteId}`);
+      const errorMessages = $(note).find('div.errorMessages');
+      // Flush any error messages, hide the error message area
+      errorMessages.empty();
+      errorMessages.hide();
+
+      let updateForm = $(note).find('div.updateForm form');
+      let reqData = $(updateForm).serializeArray();
+      reqData = objectifyForm(reqData);
+
+      doSaveNote(noteId, reqData);
+    });
+    $(`button#cancelUpdate-${initData.id}:button`).off().on('click', function (e) {
+      const noteId = $(this).data('noteId');
+      const note = $(`div#note-${noteId}`);
+      const errorMessages = $(note).find('div.errorMessages');
+      const bottomButtons = $(note).find('div.bottomButtons');
+      const updateFormHolder = $(note).find('div.updateForm');
+      const updateForm = $(note).find('div.updateForm form');
+      const inputFields = $(updateForm).find(':input');
+      // Grab all data attributes from note to reset the form
+      const noteData = note.data();
+      // For each input find the input named X in the form and set it to the value of X from noteData.
+      $.each(inputFields, function(i, data) {
+          $(updateForm).find(`input[name="${data.name}"]`).val(noteData[data.name]);
+      });
+      // Flush any error messages, hide the error message area
+      errorMessages.empty();
+      errorMessages.hide();
+      // Show the bottom buttons, hide the form
+      bottomButtons.toggle();
+      updateFormHolder.slideToggle(250);
+    });
+
+    // Event handlers for noteHolder buttons
+    $(`button#viewNote-${initData.id}:button`).off().on('click', function (e) {
+      // Remove all keys with .down class
+      const piano = $('#piano');
+      $(piano).find('.key').removeClass('down');
+      const numPos = $(this).data('numposition');
+      console.log('numPos: ', numPos);
+      var thisNote = $(`div.key[data-numposition="${numPos}"]`);
+      console.log('thisNote: ', thisNote);
+      thisNote.addClass('down');
+    });
+
+    $(`button#viewScales-${initData.id}:button`).off().on('click', function (e) {
+      console.log(e);
+    });
+    $(`button#update-${initData.id}:button`).off().on('click', function (e) {
+      const noteId = $(this).data('noteId');
+      const note = $(`div#note-${noteId}`);
+      const updateForm = $(note).find('div.updateForm');
+      const bottomButtons = $(note).find('div.bottomButtons');
+      bottomButtons.toggle();
+      updateForm.slideToggle(250);
+    });
+    $(`button#delete-${initData.id}:button`).off().on('click', function (e) {
+      const noteId = $(this).data('noteId');
+      const note = $(`div#note-${noteId}`);
+      const noteTitle = $(note).data('title');
+      modal.open({content: $(`
+        <h1 id="modalHeader">Confirm Delete</h1>
+        <p id="modalText">Are you sure you want to delete root note: <strong>${noteTitle}</strong>?</p>
+        <button id="modalConfirm" class="modalButton red" title="Delete ${noteTitle}">
+          <i class="fas fa-trash-alt"></i> Delete
+        </button>
+        <button id="modalCancel" class="modalButton grey right" title="Cancel">
+          <i class="fas fa-times-circle"></i> Cancel
+        </button>
+        `), width: 'max(80vw, 300px)'});
+      // Set event listeners to the modal buttons
+      $(`button#modalConfirm:button`).off().on('click', function (e) {
+        doDeleteNote(noteId);
+      });
+      $(`button#modalCancel:button`).off().on('click', function (e) {
+        modal.close();
+      });
+    });
+  };
+
   // GET all root notes and then update with view.
   const doGetNotes = () => {
     // Clear the content box first
     $('section.boxContent').empty();
+    // Remove all keys with .down class
+    const piano = $('#piano');
+    $(piano).find('.key').removeClass('down');
     // Then fill it with the results of the AJAX call.
     $.ajax({
       type: 'GET',
@@ -25,154 +184,58 @@ $( document ).ready(function() {
       dataType: 'json',
       success: function(result){
         $.each(result, function(i, data) {
-          var rootNote = $(`
-            <div class="noteHolder"
-                 data-note-id="${this.id}" data-note-title="${this.title}"
-                 data-note-wikipageid="${this.wikipageid}" data-note-binposition="${this.binposition}">
-              <h1 class="noteTitle">Note: ${this.title}</h1>
-              <div class="noteInfo">
-                <p><strong>Wikipedia URL: </strong><a target="_blank" href="${this.wikiurl}">${this.wikiurl}</a></p>
-                <p><strong>Wikipedia PageId: </strong>${this.wikipageid}</p>
-                <p><strong>PianoGraph: </strong>${this.binposition} (${this.numposition})</p>
-              </div>
-              <div class="updateForm">
-                <div class="errorMessages">
-                  <p>This is an error message!</p>
-                  <p>This is an error message!</p>
-                  <p>This is an error message!</p>
-                  <p>This is an error message!</p>
-                </div>
-                <div class="formHolder">
-                  <form>
-                    <div class="formInput">
-                      <label for="title">Note Name:</label>
-                      <input type="text" id="title-${this.id}" placeholder="Enter note name..."
-                             name="title" value="${this.title}">
-                    </div>
-                    <br />
-                    <div class="formInput">
-                      <label for="binposition">Binary Representation:</label>
-                      <input type="text" id="binposition-${this.id}" placeholder="Enter binary..."
-                             name="binposition" value="${this.binposition}">
-                    </div>
-                    <br />
-                    <div class="formInput">
-                      <label for="numposition">Numerical Representation:</label>
-                      <input type="text" id="numposition-${this.id}" placeholder="Enter number..."
-                             name="numposition" value="${this.numposition}">
-                    </div>
-                    <br />
-                    <div class="formInput">
-                      <label for="wikiurl">Wikipedia Link:</label>
-                      <input type="text" id="wikiurl-${this.id}" placeholder="Enter URL..."
-                             name="wikiurl" value="${this.wikiurl}">
-                    </div>
-                    <br />
-                    <div class="formInput">
-                      <label for="wikipageid">Wikipedia Page Id:</label>
-                      <input type="text" id="wikipageid-${this.id}" placeholder="Enter id..."
-                             name="wikipageid" value="${this.wikipageid}">
-                    </div>
-                    <br />
-                    <button class="saveButton" id="saveNote-${this.id}" 
-                            type="button"><i class="far fa-save"></i> Save</button>
-                    <button class="cancelButton" id="cancelUpdate-${this.id}"
-                            type="button"><i class="fas fa-times-circle"></i> Cancel</button>
-                  </form>
-                </div>
-              </div>
-              <div class="bottomButtons">
-                <button class="viewButton" id="viewNote-${this.id}" title="View Note">
-                  <i class="fas fa-music"></i> View
-                </button>
-                <button class="scalesButton" id="viewScales-${this.id}" title="View Scales">
-                  <i class="fas fa-list-ul"></i> Scales
-                </button>
-                <div class="right">
-                  <button class="updateButton" id="update-${this.id}" title="Update Note">
-                    <i class="fas fa-pencil-alt"></i> Update
-                  </button>
-                  <button class="deleteButton" id="delete-${this.id}" title="Delete Note">
-                    <i class="fas fa-trash-alt"></i> Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          `);
-
-          $(rootNote).appendTo('section.boxContent');
-          // Event handlers for the updateForm 
-          $(`button#saveNote-${this.id}:button`).off().on('click', function (e) {
-            let note = $(this).closest('div.noteHolder');
-            let noteId = $(note).data('noteId');
-            let updateForm = $(note).find('div.updateForm form');
-            let data = $(updateForm).serializeArray();
-            data = objectifyForm(data);
-
-            doSaveNote(noteId, data);
-          });
-          $(`button#cancelUpdate-${this.id}:button`).off().on('click', function (e) {
-            let note = $(this).closest('div.noteHolder');
-            let updateForm = $(note).find('div.updateForm');
-            let bottomButtons = $(note).find('div.bottomButtons');
-            bottomButtons.toggle();
-            updateForm.slideToggle(250);
-          });
-
-          $(`button#viewNote-${this.id}:button`).off().on('click', function (e) {
-            //doViewNote(data.id);
-          });
-          $(`button#viewScales-${this.id}:button`).off().on('click', function (e) {
-            //doViewScales(data.id);
-          });
-          $(`button#update-${this.id}:button`).off().on('click', function (e) {
-            let note = $(this).closest('div.noteHolder');
-            let updateForm = $(note).find('div.updateForm');
-            let bottomButtons = $(note).find('div.bottomButtons');
-            bottomButtons.toggle();
-            updateForm.slideToggle(250);
-          });
-          $(`button#delete-${this.id}:button`).off().on('click', function (e) {
-            let note = $(this).closest('div.noteHolder');
-            let noteTitle = $(note).data('noteTitle');
-            let noteId = $(note).data('noteId');
-            modal.open({content: $(`
-              <h1 id="modalHeader">Confirm Delete</h1>
-              <p id="modalText">Are you sure you want to delete root note: <strong>${noteTitle}</strong>?</p>
-              <button id="modalConfirm" class="modalButton red" title="Delete ${noteTitle}">
-                <i class="fas fa-trash-alt"></i> Delete
-              </button>
-              <button id="modalCancel" class="modalButton grey right" title="Cancel">
-                <i class="fas fa-times-circle"></i> Cancel
-              </button>
-              `), width: 'max(80vw, 300px)'});
-            // Set event listeners to the buttons
-            $(`button#modalConfirm:button`).off().on('click', function (e) {
-              doDeleteNote(noteId);
-            });
-            $(`button#modalCancel:button`).off().on('click', function (e) {
-              modal.close();
-            });
-            // Move this behind a modal confirmation.
-          });
-
-        }); // End each()
+          $(rootNoteTemplate(data)).appendTo('section.boxContent');
+          initNoteButtonHandlers(data);
+        });
       }
     });
   }; 
-  doGetNotes(); // Just run this automatically once the document is ready...
 
-
+  // GET one root notes and then update with view.
+  window.doGetOneNote = (thisNote, numPos) => {
+    // Remove all keys with .down class
+    $('#piano').find('.key').removeClass('down');
+    thisNote.addClass('down');
+    // Clear the content box first
+    $('section.boxContent').empty();
+    $.ajax({
+      type: 'GET',
+      url: `${xhrGetNotes}/${numPos}`,
+      contentType: 'application/json',
+      dataType: 'json',
+      success: (result) => {
+        $.each(result, function(i, data) {
+          $(rootNoteTemplate(data)).appendTo('section.boxContent');
+          initNoteButtonHandlers(data);
+          // Change "view all root notes" to "viewing root note {title)"
+          const contentBoxHead = $('div.boxHead');
+          const contentBoxTitle = $('p.boxTitle');
+          const boxHeader = `
+            <p class="boxTitle left">Viewing Root Note: ${data.title}</p>
+            <button id="resetView" class="titleReset right"><i class="fas fa-history"></i> See All Notes</button>
+            <br style="clear: both;" />
+          `;
+          contentBoxHead.empty();
+          $(boxHeader).appendTo(contentBoxHead);
+          $(`button#resetView:button`).off().on('click', function (e) {
+            doGetNotes();
+          });
+        });
+      },
+      error: (result) => {
+        console.log('Result Failure:', result);
+      }
+    });
+  };
 
   // DELETE deletes root notes {id} and then update the view.
   const doDeleteNote = (noteId) => {
-    console.log(`id: ${noteId}`);
     $.ajax({
       type: 'DELETE',
       url: `${xhrDeleteNote}/${noteId}`,
       contentType: 'application/json',
       dataType: 'json',
-      success: function(result){
+      success: function(){
         modal.close();
         doGetNotes();
       }
@@ -181,23 +244,55 @@ $( document ).ready(function() {
 
   // PUT updates root notes {id} and then update the view.
   const doSaveNote = (noteId, updateData) => {
-    console.log(`noteId: ${noteId}`);
-    console.log('updateData: ', updateData);
+    const note = $(`div#note-${noteId}`);
+    const errorMessages = $(note).find('div.errorMessages');
     $.ajax({
       type: 'PUT',
       url: `${xhrUpdateNote}/${noteId}`,
       contentType: 'application/x-www-form-urlencoded',
       data: updateData,
-      success: function(result){
+      dataType: 'json',
+      success: function () {
         doGetNotes();
+      },
+      error: function (result) {
+        result = result.responseJSON;
+        if(Object.keys(result.errors).length > 0) {
+          $.each(result.errors.fields, function(i, data) {
+            let errorMessage = $(`
+              <p><i class="fas fa-exclamation-triangle"></i> ${data}</p>
+            `);
+            $(errorMessage).appendTo(errorMessages);
+          });
+          errorMessages.show();
+        }
       }
     });
   };
-  const doViewNote = (e, id) => {
-    console.log('e:', e);
-  };
+
   const doViewScales = (e, id) => {
     console.log('e:', e);
   };
+
+  const initPiano = () => {
+    const piano = $('div#piano');
+    const allKeys = $(piano).find('.key');
+    //console.log('Piano keys: ', allKeys);
+    $.each(allKeys, function(i, key) {
+      //console.log('key this: ', key);
+      let keyNumPos = $(key).data('numposition');
+      $(key).off().on('click', function (e) {
+        window.doGetOneNote($(this), keyNumPos); 
+      });
+    });
+  };
+
+  // Run all of the code that should execute automatically when the page loads.
+  const readySetLoad = () => {
+    initPiano(); // Set click handlers to each piano key.
+    doGetNotes(); // Just run this automatically once the document is ready...
+  };
+  readySetLoad();
+
 
 });

@@ -205,7 +205,6 @@ section.contentBox {
 }
 section.contentBox .boxHead {
   font-family: LeagueSpartanMedium, sans-serif;
-  padding: max(1vmin, 3.75px) max(1vmin, 3.75px) max(.2vmin, .75px);
   background-color: rgba(0, 0, 0, .3);
   border-bottom: 1px solid rgba(0, 0, 0, .1);
 }
@@ -213,6 +212,19 @@ section.contentBox .boxTitle {
   color: rgba(255, 255, 240, .75);
   text-transform: uppercase;
   font-size: max(2.25vw, 8.4375px);
+  line-height: max(4.266667vw, 16px);
+  padding: max(1vmin, 3.75px) max(1vmin, 3.75px) max(.2vmin, .75px);
+  float: left;
+}
+section.contentBox .boxHead button {
+  font-family: LeagueSpartanMedium, sans-serif;
+  line-height: max(4.5vw, 16.875px);
+  color: rgba(255, 255, 240, .75);
+  text-transform: uppercase;
+  font-size: max(2.25vw, 8.4375px);
+  border-left: 1px solid rgba(0, 0, 0, .3);
+  background-color: rgba(0, 0, 0, .3);
+  padding: max(.8vmin, 3px) max(1vmin, 3.75px) max(.2vmin, .75px);
 }
 
 section.contentBox .boxContent {
@@ -356,6 +368,7 @@ section.contentBox .boxContent .updateForm {
   border-bottom: 1px solid rgba(0, 0, 0, .3);
 }
 section.contentBox .boxContent .updateForm .errorMessages {
+  display: none;
   padding: max(1vh, 3.75px);
   background-color: rgba(0, 0, 0, .5);
   color: ivory;

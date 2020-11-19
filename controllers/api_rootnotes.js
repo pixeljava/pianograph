@@ -20,6 +20,21 @@ router.get('/', (req, res) => {
     });
 });
 
+// GET /api/rootnotes/{numposition}
+// GET a list of a root note matching {numposition} <host>/api/rootnotes/
+router.get('/:noteNumposition', (req, res) => {
+  RootNote.findAll({
+    where: {numposition: req.params.noteNumposition}
+  })
+    .then(rootnotes => {
+      res.status(200).json(rootnotes);
+    })
+    .catch(e => {
+      console.log(e);
+      res.status(500).json(e);
+    });
+});
+
 // POST /api/rootnotes/add
 // POST a new root note with: title, wikiurl, binposition, numposition
 router.post('/add', (req, res) => {
@@ -69,7 +84,9 @@ router.post('/add', (req, res) => {
 // PUT an updated root note {id} with: title, wikiurl, binposition, numposition
 router.put('/update/:noteId', (req, res) => {
   let errors = {};
+  errors.fields = {};
   let request = req.body;
+  console.log('Request: ', request);
 
   if(!request.title) {
     errors.fields.title = 'Please add a title';
@@ -83,8 +100,9 @@ router.put('/update/:noteId', (req, res) => {
   if(!request.numposition) {
     errors.fields.numposition = 'Please add PianoGraph numeric position';
   }
-
-  if(Object.keys(errors).length > 0) {
+  console.log('Errors, pre-put: ', errors);
+  if(Object.keys(errors.fields).length > 0) {
+    console.log('Errors were detected, not sending.');
     res.status(500).send({
       errors,
       title: request.title,

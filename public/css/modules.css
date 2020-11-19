@@ -51,7 +51,8 @@
     /* Outer Shadow */
     0 0 max(1vmin, 3.75px) rgba(0, 0, 0, .5);
 }
-#piano .key.white:hover {
+#piano .key.white:hover,
+#piano .key.white.down {
   z-index: 0;
   box-shadow: /* X Y Blur Color */
     /* General Shadow */
@@ -87,7 +88,8 @@
     /* Outer Shadow (Match White) */
     0 0 max(1vmin, 3.75px) rgba(0, 0, 0, .5);
 }
-#piano .key.black:hover {
+#piano .key.black:hover,
+#piano .key.black.down {
 background-color: black; 
 z-index: 2;
 box-shadow: /* X Y Blur Color */
@@ -105,10 +107,11 @@ box-shadow: /* X Y Blur Color */
   0 0 max(1vmin, 3.75px) rgba(0, 0, 0, .5);
 }
 
-#piano .key.down{
+#piano .key.black.down,
+#piano .key.white.down {
   background-color: salmon;
+  color: black;
 }
-
 
 /*//////////////*/
 /* Modal Module */
