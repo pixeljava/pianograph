@@ -160,7 +160,7 @@ box-shadow: /* X Y Blur Color */
 }
 
 #modal button.modalButton {
-  margin-top: max(10vmin, 37.5px);
+  margin-top: max(6vmin, 22.5px);
   margin-right: 1ch;
   padding: max(1.2vmin, 4.5px);
   background-color: rgba(0, 0, 0, .75);

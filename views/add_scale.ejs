@@ -8,41 +8,67 @@
     </section>
     <section class="contentBox">
       <div class="boxHead">
-        <p class="boxTitle">Enter Scale Info and Click "Save"</p>
+        <p class="boxTitle">Add a Scale</p>
+        <br style="clear: both;" />
       </div>
+      <section class="pageHelp">
+        <button class="closeHelp" title="Close Help"><i class="fas fa-window-close"></i></button>
+        <p>Note: Click a note on the piano to set the scale's root note.</p>
+        <p>Then click the <i class="fas fa-tape"></i> 'Record' button and click the notes in the scale.</p>
+      </section>
       <section class="boxContent">
-        <form>
-          <div class="formInput">
-            <label for="title">Scale Name:</label>
-            <input type="text" id="title" placeholder="Enter scale name..." name="title">
+        <div class="noteHolder">
+          <section class="formHolder">
+            <div class="errorMessages"></div>
+            <div class="addForm">
+              <form>
+                <div class="formInput">
+                  <label for="title">Note Name:</label>
+                  <input type="text" placeholder="Enter note name..." name="title" maxlength="5" required>
+                </div>
+                <br />
+                <div class="formInput">
+                  <label for="binposition">Binary Representation:</label>
+                  <input type="text" placeholder="Enter binary..." name="binposition" maxlength="24" required>
+                </div>
+                <br />
+                <div class="formInput">
+                  <label for="numposition">Numerical Representation:</label>
+                  <input type="text" placeholder="Enter number..." name="numposition" maxlength="7" required>
+                </div>
+                <br />
+                <div class="formInput">
+                  <label for="wikiurl">Wikipedia Link:</label>
+                  <input type="text" placeholder="Enter URL..." name="wikiurl" maxlength="100" required>
+                </div>
+                <br />
+                <div class="formInput">
+                  <label for="wikipageid">Wikipedia Page Id:</label>
+                  <input type="text" placeholder="Enter Wikipedia page id..." name="wikipageid" maxlength="10">
+                </div>
+                <br />
+              </form>
+            </div>
+          </section>
+          <div class="bottomButtons">
+            <button class="saveButton" id="saveNote" type="button">
+              <i class="far fa-save"></i> Save
+            </button>
+            <button class="resetButton" id="resetNote" type="button">
+              <i class="far fa-trash-alt"></i> Reset
+            </button>
+            <div class="right">
+              <button class="wikiButton" id="getWikiPageId" title="Get Wikipedia Page Id" type="button">
+                <i class="fab fa-wikipedia-w"></i> Get Wiki Page Id
+              </button>
+            </div>
           </div>
-          <br />
-          <div class="formInput">
-            <label for="binposition">Binary Representation:</label>
-            <input type="text" id="binposition" placeholder="Enter binary..." name="binposition">
-          </div>
-          <br />
-          <div class="formInput">
-            <label for="numposition">Numerical Representation:</label>
-            <input type="text" id="numposition" placeholder="Enter number..." name="numposition">
-          </div>
-          <br />
-          <div class="formInput">
-            <label for="wikiurl">Wikipedia Link:</label>
-            <input type="text" id="wikiurl" placeholder="Enter URL..." name="wikiurl">
-          </div>
-          <br />
-          <div class="formInput">
-            <label for="wikipageid">Wikipedia Page Id:</label>
-            <input type="text" id="wikipageid" placeholder="Enter id..." name="wikipageid">
-          </div>
-          <br />
-          <button type="submit">Save</button>
-        </form>
+        </div>
       </section>
     </section>
     <footer>
       <%- include('./partials/footer.ejs') %>
     </footer>
+    <script src="/js/add_rootnote.js" type="text/javascript"></script>
   </body>
 </html>
