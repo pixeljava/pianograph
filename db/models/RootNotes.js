@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../server');
 
-const RootNote = db.sequelize.define('root_notes', {
+const RootNotes = db.sequelize.define('RootNotes', {
   title: {
     type: Sequelize.STRING,
     allowNull: false
@@ -24,7 +24,8 @@ const RootNote = db.sequelize.define('root_notes', {
   }
 }, {
   Sequelize,
-  modelName: 'RootNote',
+  tableName: 'root_notes',
+  modelName: 'RootNotes'
 });
 
-module.exports = RootNote;
+module.exports = RootNotes;

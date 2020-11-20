@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../server');
 
-const Scales = db.sequelize.define('scales', {
+const Scales = db.sequelize.define('Scales', {
   title: {
     type: Sequelize.STRING,
     allowNull: false
@@ -26,13 +26,14 @@ const Scales = db.sequelize.define('scales', {
     type: Sequelize.INTEGER,
     onDelete: "CASCADE",
     references: {
-      model: "root_notes",
-      key: "id",
+      model: "RootNotes",
+      foreignKey: "id",
       as: "rootnoteId",
     },
   }
 }, {
   Sequelize,
+  tableName: 'scales',
   modelName: 'Scales',
 });
 

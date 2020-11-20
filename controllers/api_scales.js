@@ -3,10 +3,6 @@ const Scales = require('../db/models/Scales');
 
 const router = express.Router();
 
-router.delete('/user', function (req, res) {
-  res.send('Got a DELETE request at /user');
-});
-
 // GET /api/scales/
 // GET a list of all root notes when accessing <host>/api/scales/
 router.get('/', (req, res) => {
@@ -20,10 +16,26 @@ router.get('/', (req, res) => {
     });
 });
 
+// GET /api/scales/{rootNoteId}
+// GET a list of a root note matching {numposition} <host>/api/rootnotes/
+router.get('/:rootNoteId', (req, res) => {
+  Scales.findAll({
+    where: {rootnoteId: req.params.rootNoteId}
+  })
+    .then(rootnotes => {
+      res.status(200).json(rootnotes);
+    })
+    .catch(e => {
+      console.log(e);
+      res.status(500).json(e);
+    });
+});
+
 // POST /api/scales/add
-// POST a new root note with: title, wikiurl, binposition, numposition, rootnoteId
+// POST a new scale with: title, wikiurl, binposition, numposition, rootnoteId
 router.post('/add', (req, res) => {
   let errors = {};
+  errors.fields = {};
   let request = req.body;
 
   if(!request.title) {
@@ -39,10 +51,10 @@ router.post('/add', (req, res) => {
     errors.fields.numposition = 'Please add PianoGraph numeric position';
   }
   if(!request.rootnoteId) {
-    errors.fields.rootnoteId = 'Please add the id of the root note that this scale refers to';
+    errors.fields.rootnoteId = 'Please the root note id for the corresponding root note';
   }
 
-  if(Object.keys(errors).length > 0) {
+  if(Object.keys(errors.fields).length > 0) {
     res.status(500).send({
       errors,
       title: request.title,
@@ -70,12 +82,12 @@ router.post('/add', (req, res) => {
   }
 });
 
-// PUT /api/scales/add
+// PUT /api/scales/update
 // PUT an updated scale {id} with: title, wikiurl, binposition, numposition, rootnoteId
-router.put('/update/:scaleId', (req, res) => {
+router.put('/update/:noteId', (req, res) => {
   let errors = {};
+  errors.fields = {};
   let request = req.body;
-  console.log(req.body);
 
   if(!request.title) {
     errors.fields.title = 'Please add a title';
@@ -90,10 +102,11 @@ router.put('/update/:scaleId', (req, res) => {
     errors.fields.numposition = 'Please add PianoGraph numeric position';
   }
   if(!request.rootnoteId) {
-    errors.fields.rootnoteId = 'Please add the id of the root note that this scale refers to';
+    errors.fields.rootnoteId = 'Please the root note id for the corresponding root note';
   }
-
-  if(Object.keys(errors).length > 0) {
+  
+  if(Object.keys(errors.fields).length > 0) {
+    console.log('Errors were detected, not sending.');
     res.status(500).send({
       errors,
       title: request.title,
@@ -109,9 +122,10 @@ router.put('/update/:scaleId', (req, res) => {
       wikiurl: request.wikiurl,
       wikipageid: request.wikipageid,
       binposition: request.binposition,
-      numposition: request.numposition
+      numposition: request.numposition,
+      rootnoteId: request.rootnoteId
     }, {
-      where: {id: req.params.scaleId},
+      where: {id: req.params.noteId},
       returning: true
     })
     .then(function ([ rowsUpdated, [returnUpdateModel] ]) {

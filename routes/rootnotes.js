@@ -2,11 +2,18 @@ const express = require('express');
 
 const router = express.Router();
 
-// Get the main rootnotes page
+// Putting this keeps it from interferring with /scales/ routing
 router.get('/', (req, res) => {
+  let rootnoteId = req.query.rootnote;
+  if (isNaN(req.query.rootnote)) {
+    rootnoteId = 0;
+  } else {
+    rootnoteId = req.query.rootnote;
+  }
   res.render('rootnotes',  {
     app_title: 'PianoGraph',
     page_description: 'Root Notes',
+    root_note_in: rootnoteId
   });
 });
 
@@ -17,5 +24,7 @@ router.get('/add', (req, res) => {
     page_description: 'Add Root Note',
   });
 });
+
+
 
 module.exports = router;

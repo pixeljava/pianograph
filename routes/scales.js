@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   res.render('scales',  {
     app_title: 'PianoGraph',
-    page_description: 'Root Notes',
+    page_description: 'Scales',
   });
 });
 
