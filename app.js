@@ -39,7 +39,7 @@ const indexRouter = require('./routes/index');
 const aboutRouter = require('./routes/about');
 const rootnotesRouter = require('./routes/rootnotes');
 const scalesRouter = require('./routes/scales');
-app.use('/', indexRouter);
+app.use('/', rootnotesRouter);
 app.use('/about', aboutRouter);
 app.use('/rootnotes', rootnotesRouter);
 app.use('/scales', scalesRouter);

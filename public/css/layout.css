@@ -199,7 +199,7 @@ footer #footerLinks .footerLink a:hover {
 section.contentBox {
   font-family: LeagueSpartanLight, sans-serif;
   width: 100%;
-  padding: 4px 8px;
+  padding: max(1vw, 3.75px) max(2vw, 7.5px);
   min-width: 380px;
   z-index: 0;
 }
@@ -317,7 +317,7 @@ section.contentBox .boxContent button {
   padding: max(1.2vw, 4.5px);
   background-color: rgb(0, 0, 0, .15);
   border: 1px solid rgba(0, 0, 0, .15);
-  border-radius: max(1vmin, 3.75px);
+  border-radius: max(1vw, 3.75px);
   font-size: max(3.2vw, 12px);
   color: ivory;
 }
@@ -408,7 +408,7 @@ section.contentBox .boxContent .formHolder form label {
   white-space: nowrap;
 }
 section.contentBox .boxContent .formHolder form input {
-  width: max(60.3vw, 228.61px);
+  width: max(58.5vw, 225px);
   background-color: rgba(255, 255, 240, .4);
   border: 1.2px solid rgba(0, 0, 0, .4);
 }
