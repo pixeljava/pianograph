@@ -23,7 +23,8 @@
     "pg": "^8.5.0",
     "pg-hstore": "^2.3.3",
     "prettier": "^2.1.2",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "url-polyfill": "^1.1.12"
   },
   "description": "PianoGraph - Find Piano Scales Quickly and Easily!",
   "main": "app.js",

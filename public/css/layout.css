@@ -227,43 +227,27 @@ section.contentBox .boxHead button {
   padding: max(.8vw, 3px) max(1vw, 3.75px) max(.2vw, .75px);
 }
 
-
-
-
-
-
 section.contentBox .pageHelp {
   display: none;
   font-size: max(3.2vw, 12px);
-  background-color: rgb(0, 0, 0, 0.05);
+  background-color: rgb(0, 0, 0, 0.1);
   border-right: 1px solid rgba(0, 0, 0, 0.3);
   border-left: 1px solid rgba(0, 0, 0, 0.3);
   padding-bottom: max(1vw, 3.75px);
 }
 section.contentBox .pageHelp .closeHelp {
-  color: rgba(255, 255, 240, .75);
-  margin-left: max(1vw, 3.75px);
-  border-top: 1px solid rgba(0, 0, 0, 0.3);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  border-left: 1px solid rgba(0, 0, 0, 0.3);
+  color: rgba(255, 255, 240, .5);
+  margin: max(.5vw, 1.875px) max(1vw, 3.75px);
   font-size: max(3.2vw, 12px);
-  background-color: rgb(0, 0, 0, 0.4);
+  background: none;
   float: right;
 }
-section.contentBox .pageHelp .closeHelp i {
-  padding: max(.5vw, 1.875px);
-}
-
 section.contentBox .pageHelp p {
   padding-top: max(1vw, 3.75px);
   padding-right: max(1vw, 3.75px);
   padding-bottom: 0;
   padding-left: max(1vw, 3.75px);
 }
-
-
-
-
 
 section.contentBox .boxContent {
   font-size: max(3.2vw, 12px);
@@ -319,6 +303,14 @@ section.contentBox .boxContent .noteInfo {
 section.contentBox .boxContent .noteInfo strong {
   font-weight: bold;
 }
+section.contentBox .boxContent .notesComplete {
+  font-size: max(4.8vw, 18px);
+  margin: max(4.8vw, 18px);
+}
+section.contentBox .boxContent .notesComplete i {
+  font-size: max(9.6vw, 36px);
+  margin-right: max(4.8vw, 18px);
+}
 section.contentBox .boxContent button {
   margin-top: max(1vw, 3.75px);
   margin-right: 1ch;
@@ -330,7 +322,7 @@ section.contentBox .boxContent button {
   color: ivory;
 }
 section.contentBox .boxContent .right button:last-child { 
-  margin: 0;
+  margin-right: 0;
 } 
 section.contentBox .boxContent button:hover,
 section.contentBox .boxContent button:focus {
@@ -426,15 +418,15 @@ section.contentBox .boxContent .formHolder form input {
     color: rgba(0, 0, 0, .4) !important;
   }
 }
-section.contentBox .boxContent .formHolder form button {
+section.contentBox .boxContent .formHolder button {
   background-color: rgb(0, 0, 0, .15);
   border: 1px solid rgba(0, 0, 0, .15);
 }
-section.contentBox .boxContent .formHolder form .right button:last-child { 
-  margin: 0;
+section.contentBox .boxContent .formHolder .right button:last-child { 
+  margin-right: 0;
 }
-section.contentBox .boxContent .formHolder form button:hover,
-section.contentBox .boxContent .formHolder form button:focus {
+section.contentBox .boxContent .formHolder button:hover,
+section.contentBox .boxContent .formHolder button:focus {
   outline: none;
   box-shadow: /* X Y Blur Color */
     0px 0px max(1vw, 3.75px) rgba(0, 0, 0, .75) inset;
@@ -446,6 +438,11 @@ section.contentBox .boxContent .formHolder .updateForm {
   background-color: rgba(0, 0, 0, .2);
   border-top: 1px solid rgba(0, 0, 0, .3);
   border-bottom: 1px solid rgba(0, 0, 0, .3);
+  padding: max(1vw, 3.75px);
+}
+
+section.contentBox .boxContent .formHolder .addForm {
+  background-color: rgba(0, 0, 0, .2);
   padding: max(1vw, 3.75px);
 }
 

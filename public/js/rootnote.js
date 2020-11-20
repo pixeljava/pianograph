@@ -52,14 +52,26 @@ $( document ).ready(function() {
             <br />
             <div class="formInput">
               <label for="wikipageid">Wikipedia Page Id:</label>
-              <input type="text" id="wikipageid-${noteData.id}" placeholder="Enter id..."
+              <input type="text" id="wikipageid-${noteData.id}" placeholder="Enter Wikipedia page id..."
                       name="wikipageid" value="${noteData.wikipageid}" maxlength="10">
             </div>
             <br />
-            <button class="saveButton" id="saveNote-${noteData.id}" data-note-id="${noteData.id}" 
-                    type="button" title="Save"><i class="far fa-save"></i> Save</button>
-            <button class="cancelButton" id="cancelUpdate-${noteData.id}" data-note-id="${noteData.id}"
-                    type="button" title="Cancel"><i class="fas fa-times-circle"></i> Cancel</button>
+            <div class="formButtons">
+              <button class="saveButton" id="saveNote-${noteData.id}" data-note-id="${noteData.id}" 
+                      type="button" title="Save">
+                <i class="far fa-save"></i> Save
+              </button>
+              <button class="cancelButton" id="cancelUpdate-${noteData.id}" data-note-id="${noteData.id}"
+                      type="button" title="Cancel">
+                <i class="fas fa-times-circle"></i> Cancel
+              </button>
+              <div class="right">
+                <button class="wikiButton" id="getWikiPageId-${noteData.id}" data-note-id="${noteData.id}" 
+                        type="button" title="Get Wikipedia Page Id" >
+                  <i class="fab fa-wikipedia-w"></i> Get Wiki Page Id
+                </button>
+              </div>
+            </div>
           </form>
         </div>
       </section>
@@ -85,8 +97,8 @@ $( document ).ready(function() {
   // initData contains a copy of the response model from a GET operation.
   const initNoteButtonHandlers = (initData) => {
     // Help Close Button
-    $('div.closeHelp').off().on('click', function (e) {
-      localStorage.setItem('showHelp',false);
+    $('button.closeHelp').off().on('click', function (e) {
+      localStorage.setItem('showRootNoteHelp',false);
       const pageHelp = $('section.pageHelp');
       pageHelp.hide();
     });
@@ -126,6 +138,16 @@ $( document ).ready(function() {
       bottomButtons.toggle();
       formHolder.slideToggle(250);
     });
+    $(`button#getWikiPageId-${initData.id}`).off().on('click', function (e) {
+      const noteId = $(this).data('noteId');
+      const note = $(`div#note-${noteId}`);
+      const updateForm = $(note).find('div.updateForm form');
+      let formUrl = $(updateForm).find('input[name="wikiurl"]').val();
+      let urlPath = new URL(formUrl).pathname;
+      let wikiPageName = urlPath.substr(urlPath.lastIndexOf('/') + 1);
+      wikiPageName = decodeURIComponent(wikiPageName);
+      doGetWikiPageId(noteId, wikiPageName);
+    });
 
     // Event handlers for noteHolder buttons
     $(`button#viewNote-${initData.id}:button`).off().on('click', function (e) {
@@ -133,9 +155,7 @@ $( document ).ready(function() {
       const piano = $('#piano');
       $(piano).find('.key').removeClass('down');
       const numPos = $(this).data('numposition');
-      console.log('numPos: ', numPos);
       var thisNote = $(`div.key[data-numposition="${numPos}"]`);
-      console.log('thisNote: ', thisNote);
       thisNote.addClass('down');
     });
 
@@ -247,6 +267,49 @@ $( document ).ready(function() {
     });
   };
 
+  const doGetWikiPageId = (noteId, wikiPageName) => {
+    const note = $(`div#note-${noteId}`);
+    const updateForm = $(note).find('div.updateForm form');
+    console.log('updateForm: ', updateForm);
+    const errorMessages = $(note).find('div.errorMessages');
+    $(errorMessages).empty();
+    let data = {
+      origin: '*',
+      action: 'query',
+      format: 'json',
+      prop: 'pageprops',
+      ppprop: 'wikibase_item',
+      titles: `${wikiPageName}`
+    };
+    $.ajax({
+      type: 'GET',
+      url: 'https://en.wikipedia.org/w/api.php',
+      data: data,
+      dataType: 'json',
+      success: function(result){
+        if (!result.query) {
+          // If we didn't send anything that the Wikipedia API can search...
+          let errorMessage = $(`
+          <p><i class="fas fa-exclamation-triangle"></i> An error occured. Did you paste the whole URL?</p>
+          `);
+          $(errorMessage).appendTo(errorMessages);
+          $(errorMessages).show();
+        } else {
+          // Grab the page id from the response and add it to the form.
+          let pageId = Object.keys(result.query.pages)[0];
+          $(updateForm).find('input[name="wikipageid"]').val(pageId);
+        }
+      },
+      error: function(result){
+        // If the search can't be completed (which, with a valid Wikipedia URL should be impossible)...
+        let errorMessage = $(`
+        <p><i class="fas fa-exclamation-triangle"></i> An error occured. Did you paste the whole URL?</p>
+        `);
+        $(errorMessage).appendTo(errorMessages);
+      },
+    });
+  };
+
   // PUT updates root notes {id} and then update the view.
   const doSaveNote = (noteId, updateData) => {
     const note = $(`div#note-${noteId}`);
@@ -282,9 +345,7 @@ $( document ).ready(function() {
   const initPiano = () => {
     const piano = $('div#piano');
     const allKeys = $(piano).find('.key');
-    //console.log('Piano keys: ', allKeys);
     $.each(allKeys, function(i, key) {
-      //console.log('key this: ', key);
       let keyNumPos = $(key).data('numposition');
       $(key).off().on('click', function (e) {
         window.doGetOneNote($(this), keyNumPos); 
@@ -295,19 +356,16 @@ $( document ).ready(function() {
   // Run all of the code that should execute automatically when the page loads.
   const readySetLoad = () => {
     const pageHelp = $('section.pageHelp');
-    // Get the localStorage value of showHelp to see if the help should remain hidden.
+    // Get the localStorage value of showRootNoteHelp to see if the help should remain hidden.
     // Of course only strings can be stored in localStorage right now, so the logic looks bad...
     // ...or there's a better way to write it. Either/or.
-    let showHelp = localStorage.getItem('showHelp');
+    let showHelp = localStorage.getItem('showRootNoteHelp');
     if (showHelp === null) {
-      console.log(`null: ${showHelp}`);
-      localStorage.setItem('showHelp',true);
+      localStorage.setItem('showRootNoteHelp',true);
       pageHelp.show();
     } else if (showHelp === 'true') {
-      console.log(`true: ${showHelp}`);
       pageHelp.show();
     } else if (showHelp === 'false') {
-      console.log(`false: ${showHelp}`);
       pageHelp.hide();
     }    
     initPiano(); // Set click handlers to each piano key.
