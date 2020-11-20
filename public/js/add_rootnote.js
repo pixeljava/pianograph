@@ -63,7 +63,7 @@ $( document ).ready(function() {
         });
         if (result.length === 24) {
           let errorMessage = $(`
-          <p class="notesComplete center"><i class="far fa-check-circle"></i>  All notes have been added!</p>
+          <p class="notesComplete center"><i class="far fa-check-circle"></i> All notes have been added!</p>
           `);
           $('section.boxContent').empty();
           $(errorMessage).appendTo('section.boxContent');
