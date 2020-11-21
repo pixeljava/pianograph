@@ -1,3 +1,7 @@
+// Simple jQuery Modal code adapted by Jeremy Penning for PianoGraph
+// From: https://www.jacklmoore.com/notes/jquery-modal-tutorial/
+// By: Jack Moore 
+
 var modal = (function(){
   var 
   method = {},

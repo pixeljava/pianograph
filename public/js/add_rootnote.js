@@ -19,6 +19,7 @@ $( document ).ready(function() {
       pageHelp.hide();
     });
     // Event handlers for the addForm buttons
+    //The 'Save' button
     $(`button#saveNote:button`).off().on('click', function (e) {
       // Flush any error messages, hide the error message area
       $('div.errorMessages').empty();
@@ -29,6 +30,7 @@ $( document ).ready(function() {
       // Now that the data is in the right form we can submit it.
       doSaveNote(reqData);
     });
+    // The 'Reset' button (to flush everything from the form)
     $('button#resetNote').off().on('click', function (e) {
       // Reset the form...
       $('div.addForm form').find(':input').val('');
@@ -36,10 +38,13 @@ $( document ).ready(function() {
       $('div.errorMessages').empty();
       $('div.errorMessages').hide();
     });
+    // Gets Wikipedia Page Ids from Wikipedia URLs
     $('button#getWikiPageId').off().on('click', function (e) {
       let formUrl = $('div.addForm form').find('input[name="wikiurl"]').val();
+      // We only need the page name from the end of the URL
       let urlPath = new URL(formUrl).pathname;
       let wikiPageName = urlPath.substr(urlPath.lastIndexOf('/') + 1);
+      // Any special characters (suprisingly) have to be coverted back to being special for the API
       wikiPageName = decodeURIComponent(wikiPageName);
       doGetWikiPageId(wikiPageName);
     });
@@ -61,6 +66,7 @@ $( document ).ready(function() {
           let thisKey = $('#piano').find(`.key[data-numposition="${data.numposition}"]`);
           $(thisKey).addClass('down').off();
         });
+        // If all 24 notes have been added show the 'full set' message
         if (result.length === 24) {
           let errorMessage = $(`
           <p class="notesComplete center"><i class="far fa-check-circle"></i> All notes have been added!</p>
@@ -68,6 +74,7 @@ $( document ).ready(function() {
           $('section.boxContent').empty();
           $(errorMessage).appendTo('section.boxContent');
         }
+        // Initiate the events for the buttons on the page
         initNoteButtonHandlers();
       }
     });
@@ -86,6 +93,7 @@ $( document ).ready(function() {
     $('div.addForm form').find('input[name="numposition"]').val(numPos);
   };
 
+  // Use Wikipedia's API to find the Page Id from the given URL.
   const doGetWikiPageId = (wikiPageName) => {
     $('div.errorMessages').empty();
     let data = {
@@ -139,6 +147,7 @@ $( document ).ready(function() {
         doGetNotes();
       },
       error: function (result) {
+        // Use the errors returned by the API to populate the error message area
         result = result.responseJSON;
         if(Object.keys(result.errors).length > 0) {
           $.each(result.errors.fields, function(i, data) {
@@ -153,9 +162,9 @@ $( document ).ready(function() {
     });
   };
 
+  // Add click handlers to each piano key
   const initPiano = () => {
-    const piano = $('div#piano');
-    const allKeys = $(piano).find('.key');
+    const allKeys = $('#piano').find('.key');
     $.each(allKeys, function(i, key) {
       let keyNumPos = $(key).data('numposition');
       $(key).off().on('click', function (e) {
@@ -183,6 +192,4 @@ $( document ).ready(function() {
     doGetNotes(); // Just run this automatically once the document is ready...
   };
   readySetLoad();
-
-
 });

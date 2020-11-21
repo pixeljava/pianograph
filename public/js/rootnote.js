@@ -129,6 +129,7 @@ $( document ).ready(function() {
       reqData = objectifyForm(reqData);
       doSaveNote(noteId, reqData);
     });
+    // The 'Cancel' button grabs a copy of the information from note and repopulates the form.
     $(`button#cancelUpdate-${initData.id}:button`).off().on('click', function (e) {
       const noteId = $(this).data('noteId');
       const note = $(`div#note-${noteId}`);
@@ -339,6 +340,7 @@ $( document ).ready(function() {
           $(`button#resetView:button`).off().on('click', function (e) {
             doGetNotes();
           });
+          // Highlight the key that was previously referenced (whether clicked or from a direct URL)
           let thisNote = $(`div.key[data-numposition="${data.numposition}"]`);
           thisNote.addClass('down');
         });
