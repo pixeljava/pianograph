@@ -12,6 +12,18 @@ $( document ).ready(function() {
     return returnArray;
   }
 
+  function nothingFound(key) {
+    // Remove all keys with .down class
+    $('#piano').find('.key').removeClass('down');
+    $(key).addClass('down');
+    // Empty the content box and add the empty set note
+    $('section.boxContent').empty();
+    const emptySetTemplate = $(`
+    <p class="emptySet center"><i class="fas fa-info-circle"></i> No info found for this note.</p>
+    `);
+    emptySetTemplate.appendTo('section.boxContent');
+  }
+
   let rootNoteTemplate = (noteData) => `
     <div id="note-${noteData.id}" class="noteHolder" data-id="${noteData.id}" data-title="${noteData.title}"
           data-wikiurl="${noteData.wikiurl}" data-wikipageid="${noteData.wikipageid}"
@@ -79,7 +91,7 @@ $( document ).ready(function() {
         <button class="viewButton" id="viewNote-${noteData.id}" data-numposition="${noteData.numposition}" title="View Note">
           <i class="fas fa-music"></i> View
         </button>
-        <button class="scalesButton" id="viewScales-${noteData.id}" data-note-id="${noteData.id}" title="View Scales">
+        <button class="scalesButton" id="viewScales-${noteData.id}" data-rootnote-id="${noteData.id}" title="View Scales">
           <i class="fas fa-list-ul"></i> Scales
         </button>
         <div class="right">
@@ -110,11 +122,11 @@ $( document ).ready(function() {
       // Flush any error messages, hide the error message area
       errorMessages.empty();
       errorMessages.hide();
-
+      // Grab everything from the form and serialize it
       let updateForm = $(note).find('div.updateForm form');
       let reqData = $(updateForm).serializeArray();
+      // Then pass it to objectifyForm to send it in the right format for the API
       reqData = objectifyForm(reqData);
-
       doSaveNote(noteId, reqData);
     });
     $(`button#cancelUpdate-${initData.id}:button`).off().on('click', function (e) {
@@ -138,30 +150,37 @@ $( document ).ready(function() {
       bottomButtons.toggle();
       formHolder.slideToggle(250);
     });
+    // Gets Wikipedia Page Ids from Wikipedia URLs
     $(`button#getWikiPageId-${initData.id}`).off().on('click', function (e) {
       const noteId = $(this).data('noteId');
       const note = $(`div#note-${noteId}`);
       const updateForm = $(note).find('div.updateForm form');
       let formUrl = $(updateForm).find('input[name="wikiurl"]').val();
+      // We only need the page name from the end of the URL
       let urlPath = new URL(formUrl).pathname;
       let wikiPageName = urlPath.substr(urlPath.lastIndexOf('/') + 1);
+      // Any special characters (suprisingly) have to be coverted back to being special for the API
       wikiPageName = decodeURIComponent(wikiPageName);
       doGetWikiPageId(noteId, wikiPageName);
     });
 
     // Event handlers for noteHolder buttons
+    // The 'View' button
     $(`button#viewNote-${initData.id}:button`).off().on('click', function (e) {
       // Remove all keys with .down class
-      const piano = $('#piano');
-      $(piano).find('.key').removeClass('down');
+      $('#piano').find('.key').removeClass('down');
       const numPos = $(this).data('numposition');
       var thisNote = $(`div.key[data-numposition="${numPos}"]`);
       thisNote.addClass('down');
     });
-
+    // The 'Scales' button
     $(`button#viewScales-${initData.id}:button`).off().on('click', function (e) {
-      console.log(e);
+      // Send the user to scales using a query string.
+      const rootnoteId = $(this).data('rootnoteId');
+      const sendTo = `${$(location).attr('origin')}/scales/?&rootnote=${rootnoteId}`;
+      window.location.href = sendTo;
     });
+    // The 'Update' button
     $(`button#update-${initData.id}:button`).off().on('click', function (e) {
       const noteId = $(this).data('noteId');
       const note = $(`div#note-${noteId}`);
@@ -170,9 +189,11 @@ $( document ).ready(function() {
       bottomButtons.toggle();
       formHolder.slideToggle(250);
     });
+    // The 'Delete' button (with modal confirmation)
     $(`button#delete-${initData.id}:button`).off().on('click', function (e) {
       const noteId = $(this).data('noteId');
       const note = $(`div#note-${noteId}`);
+      // Pass the name of the note to the modal
       const noteTitle = $(note).data('title');
       modal.open({content: $(`
         <h1 id="modalHeader">Confirm Delete</h1>
@@ -201,8 +222,7 @@ $( document ).ready(function() {
     // Clear the content box first
     $('section.boxContent').empty();
     // Remove all keys with .down class
-    const piano = $('#piano');
-    $(piano).find('.key').removeClass('down');
+    $('#piano').find('.key').removeClass('down');
     // Then fill it with the results of the AJAX call.
     $.ajax({
       type: 'GET',
@@ -211,17 +231,51 @@ $( document ).ready(function() {
       dataType: 'json',
       success: function(result){
         $.each(result, function(i, data) {
+          // Since the note's attributes may have changed, reset the rootnoteId
+          var key = $(`div.key[data-numposition="${data.numposition}"]`);
+          $(key).attr('data-rootnote-id', data.id);
+          // Use the template to construct each note's box
           $(rootNoteTemplate(data)).appendTo('section.boxContent');
+          // Initiate the events on the buttons created by the template
           initNoteButtonHandlers(data);
+          // Reset any "viewing note {noteTitle)" to default
+          const contentBoxHead = $('div.boxHead');
+          const contentBoxTitle = $('p.boxTitle');
+          const boxHeader = `
+            <p class="boxTitle left">Viewing all Root Notes</p>
+            <br style="clear: both;" />
+          `;
+          contentBoxHead.empty();
+          $(boxHeader).appendTo(contentBoxHead);
+          // Assign click handlers to each piano note
+          $(key).off().on('click', function (e) {
+            window.doGetOneNoteByNum($(this), data.numposition); 
+          });
         });
+        // Any keys that haven't been input yet get the empty set template and a matching click handler
+        let missingKeys = $('#piano .key').not('div.key[data-rootnote-id]');
+        $.each(missingKeys, function(i, key) {
+          $(key).off().on('click', function (e) {
+            nothingFound(this);
+          });
+        });
+        // If there's absolutely nothing then we add an empty set template
+        if (!result.length) {
+          $('section.boxContent').empty();
+          const emptySetTemplate = $(`
+          <p class="emptySet center"><i class="fas fa-info-circle"></i> No notes found!</p>
+          `);
+          emptySetTemplate.appendTo('section.boxContent');
+        }
       }
     });
   }; 
 
-  // GET one root note by numPos and then update the view.
+  // GET one root note by a note object and numPos and then update the view.
   window.doGetOneNoteByNum = (thisNote, numPos) => {
-    // Remove all keys with .down class
+    // Remove all keys with .down class...
     $('#piano').find('.key').removeClass('down');
+    // ...and then highlight this note.
     thisNote.addClass('down');
     // Clear the content box first
     $('section.boxContent').empty();
@@ -232,7 +286,9 @@ $( document ).ready(function() {
       dataType: 'json',
       success: (result) => {
         $.each(result, function(i, data) {
+          // Use the template to construct each note's box
           $(rootNoteTemplate(data)).appendTo('section.boxContent');
+          // Initiate the events on the buttons created by the template
           initNoteButtonHandlers(data);
           // Change "view all root notes" to "viewing root note {title)"
           const contentBoxHead = $('div.boxHead');
@@ -244,13 +300,11 @@ $( document ).ready(function() {
           `;
           contentBoxHead.empty();
           $(boxHeader).appendTo(contentBoxHead);
+          // Activate the click handler for the reset button
           $(`button#resetView:button`).off().on('click', function (e) {
             doGetNotes();
           });
         });
-      },
-      error: (result) => {
-        console.log('Result Failure:', result);
       }
     });
   };
@@ -258,8 +312,7 @@ $( document ).ready(function() {
   // GET one root notes by noteId and then update the view.
   window.doGetOneNoteById = (noteId) => {
     // Remove all keys with .down class
-    const piano = $('#piano');
-    $(piano).find('.key').removeClass('down');
+    $('#piano').find('.key').removeClass('down');
     $.ajax({
       type: 'GET',
       url: `${xhrGetNotes}/id/${noteId}`,
@@ -268,7 +321,9 @@ $( document ).ready(function() {
       success: (result) => {
         $('section.boxContent').empty();
         $.each(result, function(i, data) {
+          // Use the template to construct each note's box
           $(rootNoteTemplate(data)).appendTo('section.boxContent');
+          // Initiate the events on the buttons created by the template
           initNoteButtonHandlers(data);
           // Change "view all root notes" to "viewing root note {title)"
           const contentBoxHead = $('div.boxHead');
@@ -280,37 +335,39 @@ $( document ).ready(function() {
           `;
           contentBoxHead.empty();
           $(boxHeader).appendTo(contentBoxHead);
+          // Activate the click handler for the reset button
           $(`button#resetView:button`).off().on('click', function (e) {
             doGetNotes();
           });
-          var thisNote = $(`div.key[data-numposition="${data.numposition}"]`);
+          let thisNote = $(`div.key[data-numposition="${data.numposition}"]`);
           thisNote.addClass('down');
         });
-      },
-      error: (result) => {
-        console.log('Result Failure:', result);
       }
     });
   };
 
   // DELETE deletes root notes {id} and then update the view.
   const doDeleteNote = (noteId) => {
+    // Unset the data-rootnote-id attribute (since we need unset to be properly handled by doGetNotes)
+    let thisNote = $(`div.key[data-rootnote-id="${noteId}"]`);
+    $(thisNote).removeAttr('data-rootnote-id');
     $.ajax({
       type: 'DELETE',
       url: `${xhrDeleteNote}/${noteId}`,
       contentType: 'application/json',
       dataType: 'json',
       success: function(){
+        // Close the modal and grab the changed set of notes
         modal.close();
         doGetNotes();
       }
     });
   };
 
+  // Use Wikipedia's API to find the Page Id from the given URL.
   const doGetWikiPageId = (noteId, wikiPageName) => {
     const note = $(`div#note-${noteId}`);
     const updateForm = $(note).find('div.updateForm form');
-    console.log('updateForm: ', updateForm);
     const errorMessages = $(note).find('div.errorMessages');
     $(errorMessages).empty();
     let data = {
@@ -364,6 +421,7 @@ $( document ).ready(function() {
         doGetNotes();
       },
       error: function (result) {
+        // Use the errors returned by the API to populate the error message area
         result = result.responseJSON;
         if(Object.keys(result.errors).length > 0) {
           $.each(result.errors.fields, function(i, data) {
@@ -375,21 +433,6 @@ $( document ).ready(function() {
           errorMessages.show();
         }
       }
-    });
-  };
-
-  const doViewScales = (e, id) => {
-    console.log('e:', e);
-  };
-
-  const initPiano = () => {
-    const piano = $('div#piano');
-    const allKeys = $(piano).find('.key');
-    $.each(allKeys, function(i, key) {
-      let keyNumPos = $(key).data('numposition');
-      $(key).off().on('click', function (e) {
-        window.doGetOneNoteByNum($(this), keyNumPos); 
-      });
     });
   };
 
@@ -408,7 +451,6 @@ $( document ).ready(function() {
     } else if (showHelp === 'false') {
       pageHelp.hide();
     }    
-    initPiano(); // Set click handlers to each piano key.
 
     if (requestedRootNoteId > 0) { // If a specific note was passed as a query in the URL...
       doGetOneNoteById(requestedRootNoteId);
@@ -417,6 +459,4 @@ $( document ).ready(function() {
     }    
   };
   readySetLoad();
-
-
 });
