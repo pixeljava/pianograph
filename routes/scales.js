@@ -2,11 +2,18 @@ const express = require('express');
 
 const router = express.Router();
 
-// Get the main scales page
+// Putting this keeps it from interferring with /scales/ routing
 router.get('/', (req, res) => {
+  let rootnoteId = req.query.rootnote;
+  if (isNaN(req.query.rootnote)) {
+    rootnoteId = 0;
+  } else {
+    rootnoteId = req.query.rootnote;
+  }
   res.render('scales',  {
     app_title: 'PianoGraph',
     page_description: 'Scales',
+    root_note_in: rootnoteId
   });
 });
 

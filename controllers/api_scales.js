@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 
 // GET /api/scales/{rootNoteId}
 // GET a list of a root note matching {numposition} <host>/api/rootnotes/
-router.get('/:rootNoteId', (req, res) => {
+router.get('/id/:rootNoteId', (req, res) => {
   Scales.findAll({
     where: {rootnoteId: req.params.rootNoteId}
   })
