@@ -5,12 +5,25 @@ $( document ).ready(function() {
   const xhrDeleteScale = '/api/scales/remove'; // DELETE scale {scaleId}
 
   function objectifyForm(formArray) {
-    // Fix for POST/PUT
+    // Fixes data for POST/PUT
     var returnArray = {};
     for (var i = 0; i < formArray.length; i++){
         returnArray[formArray[i]['name']] = formArray[i]['value'];
     }
     return returnArray;
+  }
+
+  // Use a binary PianoGraph to show active keys in this scale
+  // ...in case you were wondering what the binary numbers were for...
+  // ...(other than a sneaky way to teach binary to the unwilling.)
+  function markKeysBin(binPos) {
+    const keys = $('#piano .key');
+    const binArray = binPos.split('');
+    for (let i = 0; i < binArray.length; i++) {
+      if (binArray[i] === '1') {
+        $(keys[`${i}`]).addClass('down');
+      }
+    }
   }
 
   let scaleTemplate = (scaleData) => `
@@ -80,10 +93,11 @@ $( document ).ready(function() {
         </div>
       </section>
       <div class="bottomButtons">
-        <button class="viewButton" id="viewScale-${scaleData.id}" data-numposition="${scaleData.numposition}" title="View Scale">
+        <button class="viewButton" id="viewScale-${scaleData.id}" data-numposition="${scaleData.numposition}"
+                data-scale-id="${scaleData.id}" title="View Scale">
           <i class="fas fa-music"></i> View
         </button>
-        <button class="noteButton" id="viewNote-${scaleData.id}" data-note-id="${scaleData.rootnoteId}" title="View Root Note">
+        <button class="noteButton" id="viewNote-${scaleData.id}" data-rootnote-id="${scaleData.rootnoteId}" title="View Root Note">
           <i class="fas fa-list-ul"></i> Root Note
         </button>
         <div class="right">
@@ -156,16 +170,21 @@ $( document ).ready(function() {
 
     // Event handlers for noteHolder buttons
     $(`button#viewScale-${initData.id}:button`).off().on('click', function (e) {
+      const scaleId = $(this).data('scaleId');
+      const scale = $(`div#scale-${scaleId}`);
+      const scaleBinPos = $(scale).data('binposition');
+      console.log('scale: ', scale);
       // Remove all keys with .down class
       const piano = $('#piano');
       $(piano).find('.key').removeClass('down');
-      const numPos = $(this).data('numposition');
-      var thisScale = $(`div.key[data-numposition="${numPos}"]`);
-      thisScale.addClass('down');
+      markKeysBin(scaleBinPos);
     });
 
     $(`button#viewNote-${initData.id}:button`).off().on('click', function (e) {
-      console.log(e);
+      const rootnoteId = $(this).data('rootnoteId');
+      const sendToMore = `${$(location).attr('origin')}/rootnotes/?&rootnote=${rootnoteId}`;
+      console.log('sendToMore: ', sendToMore);
+      window.location.href = sendToMore;
     });
     $(`button#update-${initData.id}:button`).off().on('click', function (e) {
       const scaleId = $(this).data('scaleId');
@@ -212,6 +231,7 @@ $( document ).ready(function() {
     });
   }; 
 
+  // @DONE!
   // GET all scales and then update with view.
   const doGetScales = () => {
     // Remove all keys with .down class
