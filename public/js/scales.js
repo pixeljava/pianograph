@@ -26,6 +26,18 @@ $( document ).ready(function() {
     }
   }
 
+  function nothingFound(key) {
+    // Remove all keys with .down class
+    $('#piano').find('.key').removeClass('down');
+    // Then highlight this key
+    $(key).addClass('down');
+    $('section.boxContent').empty();
+    const emptySetTemplate = $(`
+    <p class="emptySet center"><i class="fas fa-info-circle"></i> No scales for this note.</p>
+    `);
+    emptySetTemplate.appendTo('section.boxContent');
+  }
+
   let scaleTemplate = (scaleData) => `
     <div id="scale-${scaleData.id}" class="noteHolder" data-id="${scaleData.id}" data-title="${scaleData.title}"
           data-wikiurl="${scaleData.wikiurl}" data-wikipageid="${scaleData.wikipageid}"
@@ -128,14 +140,14 @@ $( document ).ready(function() {
       // Flush any error messages, hide the error message area
       errorMessages.empty();
       errorMessages.hide();
-
+      // Grab everything from the form and serialize it
       let updateForm = $(scale).find('div.updateForm form');
-      console.log('updateForm: ', updateForm);
+      // Then pass it to objectifyForm to send it in the right format for the API
       let reqData = $(updateForm).serializeArray();
       reqData = objectifyForm(reqData);
-
       doSaveScale(scaleId, reqData);
     });
+    // The 'Cancel' button grabs a copy of the information from note and repopulates the form.
     $(`button#cancelUpdate-${initData.id}:button`).off().on('click', function (e) {
       const scaleId = $(this).data('scaleId');
       const scale = $(`div#scale-${scaleId}`);
@@ -157,35 +169,37 @@ $( document ).ready(function() {
       bottomButtons.toggle();
       formHolder.slideToggle(250);
     });
+    // Gets Wikipedia Page Ids from Wikipedia URLs
     $(`button#getWikiPageId-${initData.id}`).off().on('click', function (e) {
       const scaleId = $(this).data('scaleId');
       const scale = $(`div#scale-${scaleId}`);
       const updateForm = $(scale).find('div.updateForm form');
       let formUrl = $(updateForm).find('input[name="wikiurl"]').val();
+      // We only need the page name from the end of the URL
       let urlPath = new URL(formUrl).pathname;
       let wikiPageName = urlPath.substr(urlPath.lastIndexOf('/') + 1);
+      // Any special characters (suprisingly) have to be coverted back to being special for the API
       wikiPageName = decodeURIComponent(wikiPageName);
       doGetWikiPageId(scaleId, wikiPageName);
     });
 
     // Event handlers for noteHolder buttons
+    // The 'View' button
     $(`button#viewScale-${initData.id}:button`).off().on('click', function (e) {
       const scaleId = $(this).data('scaleId');
       const scale = $(`div#scale-${scaleId}`);
       const scaleBinPos = $(scale).data('binposition');
-      console.log('scale: ', scale);
       // Remove all keys with .down class
-      const piano = $('#piano');
-      $(piano).find('.key').removeClass('down');
+      $('#piano').find('.key').removeClass('down');
       markKeysBin(scaleBinPos);
     });
-
+    // The 'View Root Note' button
     $(`button#viewNote-${initData.id}:button`).off().on('click', function (e) {
       const rootnoteId = $(this).data('rootnoteId');
-      const sendToMore = `${$(location).attr('origin')}/rootnotes/?&rootnote=${rootnoteId}`;
-      console.log('sendToMore: ', sendToMore);
-      window.location.href = sendToMore;
+      const sendTo = `${$(location).attr('origin')}/rootnotes/?&rootnote=${rootnoteId}`;
+      window.location.href = sendTo;
     });
+    // The 'Update' button
     $(`button#update-${initData.id}:button`).off().on('click', function (e) {
       const scaleId = $(this).data('scaleId');
       const scale = $(`div#scale-${scaleId}`);
@@ -194,9 +208,11 @@ $( document ).ready(function() {
       bottomButtons.toggle();
       formHolder.slideToggle(250);
     });
+    // The 'Delete' button (with modal confirmation)
     $(`button#delete-${initData.id}:button`).off().on('click', function (e) {
       const scaleId = $(this).data('scaleId');
       const scale = $(`div#scale-${scaleId}`);
+      // Pass the name of the scale to the modal
       const scaleTitle = $(scale).data('title');
       modal.open({content: $(`
         <h1 id="modalHeader">Confirm Delete</h1>
@@ -218,7 +234,7 @@ $( document ).ready(function() {
     });
   };
 
-  // GET all root notes and then update with view.
+  // GET all root notes on page load add rootnoteId to the piano keys
   const doGetNotes = () => {
     $.ajax({
       type: 'GET',
@@ -226,12 +242,26 @@ $( document ).ready(function() {
       contentType: 'application/json',
       dataType: 'json',
       success: function(result){
-        console.log('doGetNotes: ', doGetNotes);
+        // Go through each note and set a data-rootnote-id attribute to the corresponding key
+        $.each(result, function(i, data) {
+          var key = $(`div.key[data-numposition="${data.numposition}"]`);
+          $(key).attr('data-rootnote-id', data.id);
+          // Assign click handlers to each piano note
+          $(key).off().on('click', function (e) {
+            doGetScalesById(data.id);
+          });
+        });
+        // Any keys that haven't been input yet apply the 'empty set' template
+        let missingKeys = $('#piano .key').not('div.key[data-rootnote-id]');
+        $.each(missingKeys, function(i, key) {
+          $(key).off().on('click', function (e) {
+            nothingFound(key);
+          });
+        });
       }
     });
   }; 
 
-  // @DONE!
   // GET all scales and then update with view.
   const doGetScales = () => {
     // Remove all keys with .down class
@@ -246,61 +276,32 @@ $( document ).ready(function() {
       contentType: 'application/json',
       dataType: 'json',
       success: function(result){
-        console.log('GET scales result: ', result);
         $.each(result, function(i, data) {
-          // Place data on the keys: title, rootnoteId, numposition
+          // Use the template to construct each note's box
           $(scaleTemplate(data)).appendTo('section.boxContent');
+          // Initiate the events on the buttons created by the template
           initScaleButtonHandlers(data);
         });
+        // Reset any "viewing scale {noteTitle)" to default
+        const contentBoxHead = $('div.boxHead');
+        const contentBoxTitle = $('p.boxTitle');
+        const boxHeader = `
+          <p class="boxTitle left">Viewing Scales for All Notes</p>
+          <br style="clear: both;" />
+        `;
+        contentBoxHead.empty();
+        $(boxHeader).appendTo(contentBoxHead);
       }
     });
   }; 
 
-  // GET one scale by numPos and then update the view.
-  window.doGetOneScaleByNum = (thisScale, numPos) => {
+  // GET scales by rootnoteId and then update the view.
+  window.doGetScalesById = (rootnoteId) => {
     // Remove all keys with .down class
     $('#piano').find('.key').removeClass('down');
-    thisScale.addClass('down');
-    // Clear the content box first
-    $('section.boxContent').empty();
     $.ajax({
       type: 'GET',
-      url: `${xhrGetScales}/number/${numPos}`,
-      contentType: 'application/json',
-      dataType: 'json',
-      success: (result) => {
-        $.each(result, function(i, data) {
-          $(scaleTemplate(data)).appendTo('section.boxContent');
-          initScaleButtonHandlers(data);
-          // Change "view all scales" to "viewing scale {title)"
-          const contentBoxHead = $('div.boxHead');
-          const contentBoxTitle = $('p.boxTitle');
-          const boxHeader = `
-            <p class="boxTitle left">Viewing Scale: ${data.title}</p>
-            <button id="resetView" class="titleReset right"><i class="fas fa-history"></i> See All Scales</button>
-            <br style="clear: both;" />
-          `;
-          contentBoxHead.empty();
-          $(boxHeader).appendTo(contentBoxHead);
-          $(`button#resetView:button`).off().on('click', function (e) {
-            doGetScales();
-          });
-        });
-      },
-      error: (result) => {
-        console.log('Result Failure:', result);
-      }
-    });
-  };
-
-  // GET one scale by scaleId and then update the view.
-  window.doGetOneScaleById = (scaleId) => {
-    // Remove all keys with .down class
-    const piano = $('#piano');
-    $(piano).find('.key').removeClass('down');
-    $.ajax({
-      type: 'GET',
-      url: `${xhrGetScales}/id/${scaleId}`,
+      url: `${xhrGetScales}/id/${rootnoteId}`,
       contentType: 'application/json',
       dataType: 'json',
       success: (result) => {
@@ -308,30 +309,37 @@ $( document ).ready(function() {
         $.each(result, function(i, data) {
           $(scaleTemplate(data)).appendTo('section.boxContent');
           initScaleButtonHandlers(data);
-          // Change "view all scales" to "viewing scale {title)"
-          const contentBoxHead = $('div.boxHead');
-          const contentBoxTitle = $('p.boxTitle');
-          const boxHeader = `
-            <p class="boxTitle left">Viewing Scale: ${data.title}</p>
-            <button id="resetView" class="titleReset right"><i class="fas fa-history"></i> See All Scales</button>
-            <br style="clear: both;" />
-          `;
-          contentBoxHead.empty();
-          $(boxHeader).appendTo(contentBoxHead);
-          $(`button#resetView:button`).off().on('click', function (e) {
-            doGetScales();
-          });
-          var thisScale = $(`div.key[data-numposition="${data.numposition}"]`);
-          thisScale.addClass('down');
         });
-      },
-      error: (result) => {
-        console.log('Result Failure:', result);
+        // Use the key matching rootnoteId on the piano to get our root note attributes
+        let matchedKey = $(`div.key[data-rootnote-id="${rootnoteId}"]`);
+        const noteTitle = $(matchedKey).data('title');
+        // Highlight the matching key
+        $(matchedKey).addClass('down');
+        // Change "view all scales" to "viewing scale {noteTitle)"
+        const contentBoxHead = $('div.boxHead');
+        const contentBoxTitle = $('p.boxTitle');
+        const boxHeader = `
+          <p class="boxTitle left">Viewing Scales for Note: ${noteTitle}</p>
+          <button id="resetView" class="titleReset right"><i class="fas fa-history"></i> See All Scales</button>
+          <br style="clear: both;" />
+        `;
+        contentBoxHead.empty();
+        $(boxHeader).appendTo(contentBoxHead);
+        // Activate the click handler for the reset button
+        $(`button#resetView:button`).off().on('click', function (e) {
+          doGetScales();
+        });
+        // If there's absolutely nothing then we add an empty set template
+        if (!result.length) {
+          const emptySetTemplate = $(`
+          <p class="emptySet center"><i class="fas fa-info-circle"></i> No scales for this note.</p>
+          `);
+          emptySetTemplate.appendTo('section.boxContent');
+        }
       }
     });
   };
 
-  // @DONE!
   // DELETE deletes scale {id} and then update the view.
   const doDeleteScale = (scaleId) => {
     $.ajax({
@@ -340,16 +348,17 @@ $( document ).ready(function() {
       contentType: 'application/json',
       dataType: 'json',
       success: function(){
+        // Close the modal and grab the changed set of notes
         modal.close();
         doGetScales();
       }
     });
   };
 
+  // Use Wikipedia's API to find the Page Id from the given URL.
   const doGetWikiPageId = (scaleId, wikiPageName) => {
     const scale = $(`div#scale-${scaleId}`);
     const updateForm = $(scale).find('div.updateForm form');
-    console.log('updateForm: ', updateForm);
     const errorMessages = $(scale).find('div.errorMessages');
     $(errorMessages).empty();
     let data = {
@@ -403,6 +412,7 @@ $( document ).ready(function() {
         doGetScales();
       },
       error: function (result) {
+        // Use the errors returned by the API to populate the error message area
         result = result.responseJSON;
         if(Object.keys(result.errors).length > 0) {
           $.each(result.errors.fields, function(i, data) {
@@ -414,21 +424,6 @@ $( document ).ready(function() {
           errorMessages.show();
         }
       }
-    });
-  };
-
-  const doViewScales = (e, id) => {
-    console.log('e:', e);
-  };
-
-  const initPiano = () => {
-    const piano = $('div#piano');
-    const allKeys = $(piano).find('.key');
-    $.each(allKeys, function(i, key) {
-      let keyNumPos = $(key).data('numposition');
-      $(key).off().on('click', function (e) {
-        window.doGetOneScale($(this), keyNumPos); 
-      });
     });
   };
 
@@ -447,11 +442,13 @@ $( document ).ready(function() {
     } else if (showHelp === 'false') {
       pageHelp.hide();
     }    
-    initPiano(); // Set click handlers to each piano key.
-    //doGetNotes(); // Just run this automatically once the document is ready...
-    doGetScales(); // Will probably get more specific and require a root note to load.
+
+    doGetNotes();
+    if (requestedRootNoteId > 0) { // If a specific note was passed as a query in the URL...
+      doGetScalesById(requestedRootNoteId);
+    } else {
+      doGetScales(); // ...or just run this automatically once the document is ready...
+    }   
   };
   readySetLoad();
-
-
 });
