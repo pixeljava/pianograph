@@ -303,10 +303,12 @@ section.contentBox .boxContent .noteInfo {
 section.contentBox .boxContent .noteInfo strong {
   font-weight: bold;
 }
+section.contentBox .boxContent .emptySet,
 section.contentBox .boxContent .notesComplete {
   font-size: max(4.8vw, 18px);
   margin: max(4.8vw, 18px);
 }
+section.contentBox .boxContent .emptySet i,
 section.contentBox .boxContent .notesComplete i {
   font-size: max(9.6vw, 36px);
   margin-right: max(4.8vw, 18px);
