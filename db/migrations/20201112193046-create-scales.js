@@ -21,13 +21,11 @@ module.exports = {
       },
       binposition: {
         type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
+        allowNull: false
       },
       numposition: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        unique: true
+        allowNull: false
       },
       rootnoteId: {
         type: Sequelize.INTEGER,

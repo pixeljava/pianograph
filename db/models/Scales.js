@@ -15,12 +15,10 @@ const Scales = db.sequelize.define('Scales', {
   binposition: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true
   },
   numposition: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    unique: true
   },
   rootnoteId: {
     type: Sequelize.INTEGER,
