@@ -203,6 +203,9 @@ section.contentBox {
   min-width: 380px;
   z-index: 0;
 }
+section.contentBox:last-of-type {
+  margin-bottom: max(4vw, 15px);
+}
 section.contentBox .boxHead {
   font-family: LeagueSpartanMedium, sans-serif;
   background-color: rgba(0, 0, 0, .3);
@@ -450,11 +453,11 @@ section.contentBox .boxContent .formHolder .addForm {
 
 @media (min-width: 800px) {
   body {
-    background-color: salmon;
+    /* background-color: salmon; */
   }
 }
 @media (max-width: 379px) {
   body {
-    background-color: green;
+    /* background-color: green; */
   }
 }
