@@ -26,14 +26,14 @@
 #piano .key .keyLabel {
   position: absolute;
   bottom: max(1vmin, 3.75px);
+  width: 100%;
+  display: block;
   text-align: center;
   cursor: default;
 }
-#piano .key.white .keyLabel {
-  left: 40%;
-}
-#piano .key.black .keyLabel {
-  left: 30%;
+#piano .key .keyLabel .scaleRoot {
+  display: block;
+  padding-bottom: max(.32vw, 1px);
 }
 #piano .key.white {
   height: max(20vw, 75px);
@@ -111,6 +111,11 @@ box-shadow: /* X Y Blur Color */
 #piano .key.white.down {
   background-color: salmon;
   color: black;
+}
+
+#piano .key.disabled,
+#piano .key.disabled:hover {
+  background-color: rgb(94, 94, 94);
 }
 
 /*//////////////*/

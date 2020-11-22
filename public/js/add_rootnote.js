@@ -134,7 +134,7 @@ $( document ).ready(function() {
 
   };
 
-  // PUT updates root notes {id} and then update the view.
+  // POST adds a root note and then update the view.
   const doSaveNote = (updateData) => {
     $.ajax({
       type: 'POST',
