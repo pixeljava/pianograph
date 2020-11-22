@@ -41,9 +41,6 @@ router.post('/add', (req, res) => {
   if(!request.title) {
     errors.fields.title = 'Please add a title';
   }
-  if(!request.wikiurl) {
-    errors.fields.wikiurl = 'Please add a Wikipedia URL for this note';
-  }
   if(!request.binposition) {
     errors.fields.binposition = 'Please add PianoGraph binary position';
   }
@@ -91,9 +88,6 @@ router.put('/update/:noteId', (req, res) => {
 
   if(!request.title) {
     errors.fields.title = 'Please add a title';
-  }
-  if(!request.wikiurl) {
-    errors.fields.wikiurl = 'Please add a Wikipedia URL for this note';
   }
   if(!request.binposition) {
     errors.fields.binposition = 'Please add PianoGraph binary position';

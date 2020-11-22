@@ -17,7 +17,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       wikipageid: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       binposition: {
         type: Sequelize.STRING,
