@@ -5,12 +5,43 @@
     <%- include('./partials/header.ejs') %>
     <section class="contentBox">
       <div class="boxHead">
-        <p class="boxTitle">PianoGraph is made by:</p>
+        <p class="boxTitle">About PianoGraph</p>
+        <br style="clear: both;" />
       </div>
       <section class="boxContent">
-        <p>I exist.</p>
+        <div class="noteHolder">
+          <h1 class="noteTitle">About the Developer</h1>
+          <div class="noteInfo">
+            <p>My name is Jeremy Penning currently living in Seattle, Washington. I've loved technology of all forms for as long as I can remember. I've been building, tearing apart and programming computers since 4th grade. I got into web design 4 years later and landed my first job at 15.</p><br /> <p>Since then I've created websites and web applications for everybody from long-shot rural political candidates to international corporations. Most recently I created a web application for company that provides e-learning service to over 100,000 users in the US and around the world.</p>
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="boxContent">
+        <div class="noteHolder">
+          <h1 class="noteTitle">About PianoGraph</h1>
+          <div class="noteInfo">
+            <p>PianoGraph was created for an entry project into Code Fellows <a target="_blank" href="https://www.codefellows.org/courses/code-401/advanced-software-development-in-full-stack-javascript/">"Code 401: Advanced Software Development in Full-Stack JavaScript"</a> class. While trying to think about an idea for an app a friend gave me inspiration. He asked why there wasn't a tool on the internet that allowed someone to just click on a note on a piano and see every scale and chord associated with that note.</p><br />
+            <p>I looked around and, sure enough, nothing really seemed to work the way he described it. I'm not a musician at all. In fact, the only class I've ever failed was "Music" class in 3rd grand. Ouch. After patiently describing how everything should work I started on some UI sketches on paper.</p><br />
+            <p>Once that was done I started thinking about how to represent any combination of 24 notes using a single piece of data that also stored their positions (without resorting to storing every single key's pressed/unpressed status in a database). That's where the idea for using binary numbers came in. After patiently describing how that worked to my friend I got down to the hard work of creating the app that you see before you.</p><br />
+            <p>All in all, I think it may have just been a sneaky way for us to teach each other about something we knew, but had always made the other person's eyes gloss over.</p>
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="boxContent">
+        <div class="noteHolder">
+          <h1 class="noteTitle">Alright... Here's the Binary Talk</h1>
+          <div class="noteInfo">
+            <p>Let's say a piano has four keys... We'll call them ABCD. Those keys only have two states they can be in: up (0) or down (1). In binary that's known as a 'bit', a single 1 or 0. Using binary numbers we could show only B being pressed down with: '0100' (all the others, the '0's, are up). When converting that number from binary to the decimal system we get: '4'.</p><br />
+            <p>If I gave you a number, say '9', it would convert to '1001' in binary, which would show that keys A & D were pressed down. For any of the 16 possible combinations of four keys being pressed there's exactly one binary number that matches that combination, and one decimal number that matches as well.</p><br />
+            <p>If we were to store information about our key combination in a database we'd ususally have to store the name AND the state of each of the 4 keys in a different column for each combination. For our example that's 4 different columns; PianoGraph would need a whopping 24 different columns.</p><br />
+            <p>By using 24-bit binary numbers (or their decimal version) PianoGraph doesn't even need to know the names of the keys. We just look at the the binary and press down each key if there's a '1' in it's position.<p><br /> <p>A fun bonus fact: If you're looking at a monitor right now you're seeing colors that were stored as 24-bit binary too... which means there's 16,777,216 different colors that can be displayed. Nifty!</p>
+          </div>
+        </div>
       </section>
     </section>
+    
     <footer>
       <%- include('./partials/footer.ejs') %>
     </footer>
