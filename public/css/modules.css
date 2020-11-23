@@ -4,15 +4,15 @@
 
 #piano {
   clear: both;
-  height: min(20vw, 300px);
-  min-height: 76px;
+  height: min(20vw, 210px);
+  min-width: 350px;
   box-shadow: /* X Y Blur Color */
-  /* General Piano Drop Shadow */
-  0 min(.5vmin, 7.2px) min(.5vmin, 7.2px) rgba(0, 0, 0, .8);
+    /* General Piano Drop Shadow */
+    0 min(.5vmin, 7.2px) min(.5vmin, 7.2px) rgba(0, 0, 0, .8);
 }
 
 #piano .keyHolder {
-  width: calc(100% / 14);
+  width: min(calc(100% / 14), 70px);
   height: 100%;
   position: relative;
   float: left;
@@ -20,7 +20,7 @@
 
 #piano .key {
   font-family: LeagueSpartanBold, sans-serif;
-  font-size: min(3.25vw, 40px);
+  font-size: min(3.25vw, 32px);
   text-align: center;
   border: 1px solid rgba(0, 0, 0, .85);
 }
@@ -34,7 +34,7 @@
 }
 #piano .key .keyLabel .scaleRoot {
   display: block;
-  padding-bottom: max(.32vw, 1px);
+  padding-bottom: min(.32vw, 2.8px);
 }
 #piano .key.white {
   height: 100%;
@@ -44,32 +44,32 @@
   z-index: 1;
   box-shadow: /* X Y Blur Color */
     /* Harsh Bottom Shadow */
-    inset 0 max(-.1vmin, -.375px) max(.2vmin, .75px) rgba(0, 0, 0, 0.95),
+    inset 0 max(-.1vmin, -1.05px) min(.2vmin, 2.1px) rgba(0, 0, 0, 0.95),
     /* General Shadow */
-    inset 0 max(-.35vmin, -.13125px) max(1vmin, 1.125px) rgba(0, 0, 0, 0.95),
+    inset 0 max(-.35vmin, -.13125px) min(1vmin, 3.15px) rgba(0, 0, 0, 0.95),
     /* Border Shadow */
-    inset 0 0 max(.1vmin, .375px) rgba(0, 0, 0),
+    inset 0 0 min(.1vmin, 1.05px) rgba(0, 0, 0),
     /* Outer Shadow */
-    0 0 max(1vmin, 3.75px) rgba(0, 0, 0, .5);
+    0 0 min(1vmin, 10.5px) rgba(0, 0, 0, .5);
 }
 #piano .key.white:hover,
 #piano .key.white.down {
   z-index: 0;
   box-shadow: /* X Y Blur Color */
     /* General Shadow */
-    inset 0 max(-.1vmin, -.375px) max(.5vmin, 1.88px) rgba(0, 0, 0, 0.95),
+    inset 0 max(-.1vmin, -1.05px) min(.5vmin, 5.264px) rgba(0, 0, 0, 0.95),
     /* General Shadow */
-    inset 0 max(-.25vmin, -.9375px) max(2vmin, 7.5px) rgba(0, 0, 0, 0.95),
+    inset 0 max(-.25vmin, -2.625px) min(2vmin, 21px) rgba(0, 0, 0, 0.95),
     /* Border Shadow */
-    inset 0 0 max(.1vmin, .375px) rgba(0, 0, 0),
+    inset 0 0 min(.1vmin, 1.05px) rgba(0, 0, 0),
     /* Outer Shadow */
-    0 0 max(1vmin, 3.75px) rgba(0, 0, 0, .5);                 
+    0 0 min(1vmin, 10.5px) rgba(0, 0, 0, .5);                 
 }
 #piano .key.black {
   position: absolute;
   top: 0;
   left: 100%;
-  height: 60%;
+  height: 55%;
   width: 85%;
   background-color: rgb(16, 16, 16);
   color:ivory;
@@ -77,35 +77,35 @@
   z-index: 3;
   box-shadow: /* X Y Blur Color */
     /* White Key Reflection */
-    inset 0 max(-.5vmin, -1.88px) max(.8vmin, 3px) rgba(255, 255, 240, 0.5),
+    inset 0 max(-.5vmin, -5.264px) min(.8vmin, 8.4px) rgba(255, 255, 240, 0.5),
     /* White Key Reflection */
-    inset 0 max(-.2vmin, -.75px) max(.4vmin, 1.5px) rgba(255, 255, 240, 0.2),
+    inset 0 max(-.2vmin, -2.1px) min(.4vmin, 4.2px) rgba(255, 255, 240, 0.2),
     /* Border Shadow */
-    inset 0 0 max(.2vmin, 0.75px) rgba(0, 0, 0),
+    inset 0 0 min(.2vmin, 2.1px) rgba(0, 0, 0),
     /* Outer Key Drop Shadow (Harsher) */
-    0 max(.6vmin, 2.25px) max(.3vmin, 1.125px) rgba(0, 0, 0, .9),
+    0 min(.6vmin, 6.3px) min(.3vmin, 3.15px) rgba(0, 0, 0, .9),
     /* Outer Key Drop Shadow (Softer) */
-    0 max(.8vmin, 3px) max(.4vmin, 1.5px) rgba(0, 0, 0, .8),
+    0 min(.8vmin, 8.4px) min(.4vmin, 4.2px) rgba(0, 0, 0, .8),
     /* Outer Shadow (Match White) */
-    0 0 max(1vmin, 3.75px) rgba(0, 0, 0, .5);
+    0 0 min(1vmin, 10.5px) rgba(0, 0, 0, .5);
 }
 #piano .key.black:hover,
 #piano .key.black.down {
-background-color: black; 
-z-index: 2;
-box-shadow: /* X Y Blur Color */
-  /* White Key Reflection */
-  inset 0 max(-.35vmin, -1.3125px) max(1vmin, 3.75px) rgba(255, 255, 240, 0.35),
-  /* White Key Reflection */ 
-  inset 0 max(-.75vmin, -2.8125px) max(1.5vmin, 5.625px) rgba(17, 17, 17, 0.4),
-  /* Border Shadow */
-  inset 0 0 max(.2vmin, 0.75px) rgba(0, 0, 0),
-  /* Outer Shadow (Pressed Down)*/
-  0 max(.4vmin, 1.5px) max(.2vmin, .75px) rgba(0, 0, 0, .9),
-  /* Outer Shadow (Pressed Down)*/
-  0 max(.6vmin, 2.25px) max(.3vmin, 1.125px) rgba(0, 0, 0, .7),
-  /* Outer Shadow (Match White) */
-  0 0 max(1vmin, 3.75px) rgba(0, 0, 0, .5);
+  background-color: black; 
+  z-index: 2;
+  box-shadow: /* X Y Blur Color */
+    /* White Key Reflection */
+    inset 0 max(-.35vmin, -3.675px) min(1vmin, 10.5px) rgba(255, 255, 240, 0.35),
+    /* White Key Reflection */ 
+    inset 0 max(-.75vmin, -7.875px) min(1.5vmin, 15.75px) rgba(17, 17, 17, 0.4),
+    /* Border Shadow */
+    inset 0 0 min(.2vmin, 2.1px) rgba(0, 0, 0),
+    /* Outer Shadow (Pressed Down)*/
+    0 min(.4vmin, 4.2px) min(.2vmin, 2.1px) rgba(0, 0, 0, .9),
+    /* Outer Shadow (Pressed Down)*/
+    0 min(.6vmin, 6.3px) min(.3vmin, 3.15px) rgba(0, 0, 0, .7),
+    /* Outer Shadow (Match White) */
+    0 0 min(1vmin, 10.5px) rgba(0, 0, 0, .5);
 }
 
 #piano .key.black.down,
@@ -119,24 +119,121 @@ box-shadow: /* X Y Blur Color */
   background-color: rgb(94, 94, 94);
 }
 
-
-
-
 @media (max-width: 380px) {
   #piano {
+    height: 75px;
     box-shadow: /* X Y Blur Color */
-    /* General Piano Drop Shadow */
-    0 3.6px 3.6px rgba(0, 0, 0, .8);
+      /* General Piano Drop Shadow */
+      0 3.6px 3.6px rgba(0, 0, 0, .8);
+  }
+  #piano .keyHolder {
+    width: 25px;
   }
   #piano .key {
-    font-size: 12.5px;
+    font-size: 11.425px;
     box-shadow: /* X Y Blur Color */
-    /* General Piano Drop Shadow */
-    0 1.88px 1.88px rgba(0, 0, 0, .8);
+      /* General Piano Drop Shadow */
+      0 1.88px 1.88px rgba(0, 0, 0, .8);
+  }
+  #piano .key .keyLabel .scaleRoot {
+    padding-bottom: 1px;
+  }
+  #piano .key.white {
+    box-shadow: /* X Y Blur Color */
+      /* Harsh Bottom Shadow */
+      inset 0 -.375px .75px rgba(0, 0, 0, 0.95),
+      /* General Shadow */
+      inset 0 -.13125px 1.125px rgba(0, 0, 0, 0.95),
+      /* Border Shadow */
+      inset 0 0 .375px rgba(0, 0, 0),
+      /* Outer Shadow */
+      0 0 3.75px rgba(0, 0, 0, .5);
+  }
+  #piano .key.white:hover,
+  #piano .key.white.down {
+    box-shadow: /* X Y Blur Color */
+      /* General Shadow */
+      inset 0 -.375px 1.88px rgba(0, 0, 0, 0.95),
+      /* General Shadow */
+      inset 0 -.9375px 7.5px rgba(0, 0, 0, 0.95),
+      /* Border Shadow */
+      inset 0 0 3.75px rgba(0, 0, 0),
+      /* Outer Shadow */
+      0 0 3.75px rgba(0, 0, 0, .5);                 
+  }
+  #piano .key.black {
+    box-shadow: /* X Y Blur Color */
+      /* White Key Reflection */
+      inset 0 -1.88px 3px rgba(255, 255, 240, 0.5),
+      /* White Key Reflection */
+      inset 0 -.75px 1.5px rgba(255, 255, 240, 0.2),
+      /* Border Shadow */
+      inset 0 0 0.75px rgba(0, 0, 0),
+      /* Outer Key Drop Shadow (Harsher) */
+      0 2.25px 1.125px rgba(0, 0, 0, .9),
+      /* Outer Key Drop Shadow (Softer) */
+      0 3px 1.5px rgba(0, 0, 0, .8),
+      /* Outer Shadow (Match White) */
+      0 0 3.75px rgba(0, 0, 0, .5);
+  }
+  #piano .key.black:hover,
+  #piano .key.black.down {
+    box-shadow: /* X Y Blur Color */
+      /* White Key Reflection */
+      inset 0 -1.3125px 3.75px rgba(255, 255, 240, 0.35),
+      /* White Key Reflection */ 
+      inset 0 -2.8125px 5.625px rgba(17, 17, 17, 0.4),
+      /* Border Shadow */
+      inset 0 0 0.75px rgba(0, 0, 0),
+      /* Outer Shadow (Pressed Down)*/
+      0 1.5px .75px rgba(0, 0, 0, .9),
+      /* Outer Shadow (Pressed Down)*/
+      0 2.25px 1.125px rgba(0, 0, 0, .7),
+      /* Outer Shadow (Match White) */
+      0 0 3.75px rgba(0, 0, 0, .5);
   }
 }
 
-
+@media (max-width: 380px) { /* 2.8x smaller than max */
+  #navMenuButton {
+    height: 54px;
+    width: 54px;
+    font-size: 48px;
+  }
+  #navMenuButton:hover,
+  #navMenuButton:focus,
+  #navMenuButton.open:hover,
+  #navMenuButton.open:focus {
+    outline-offset: -10px;
+  }
+  #navMenuButton:active,
+  #navMenuButton.open {
+    box-shadow:
+      /* X Y Blur Color */
+      inset 0 0 1.5vmin rgba(0, 0, 0, 0.75),
+      inset 0 0 3vmin rgb(0, 0, 0, .9);
+  }
+  #navMenuItems {
+    top: 54px;
+    font-size: 12px;
+    width: 380px;
+    box-shadow: /* X Y Blur Color */
+      -0.32px 3.2px 3.2px rgba(0, 0, 0, 0.8);
+  }
+  #navMenuItems a {
+    padding: 18px 18px;
+    text-decoration: none;
+    box-shadow: /* X Y Blur Color */
+      inset 0 0 4.5px rgba(255, 255, 240, 0.5),
+      inset 0 0 .63px rgb(0, 0, 0);
+  }
+  #navMenuItems a:hover {
+    box-shadow:
+      /* X Y Blur Color */
+      inset 0 0 9px rgba(255, 255, 240, 0.8),
+      inset 0 0 .63px rgb(0, 0, 0);
+  }
+}
 
 
 
@@ -160,40 +257,41 @@ box-shadow: /* X Y Blur Color */
 
 #modal {
   position:absolute;
+  max-width: 780px !important;
   background:url(../img/tint50.png) 0 0 repeat;
   background:rgba(0,0,0,0.5);
-  border-radius: max(4.8vmin, 18px);
-  padding: max(1.2vmin, 4.5px);
+  border-radius: min(4.8vmin, 54px);
+  padding: min(1.2vmin, 13.5px);
   z-index: 997
 }
 
 #modalContent {
-  font-size: max(4.8vmin, 18px);
-  border-radius: max(4.8vmin, 18px);
+  font-size: min(4.8vmin, 54px);
+  border-radius: min(4.8vmin, 54px);
   background: ivory;
-  padding: max(4.8vmin, 18px);
+  padding: min(4.8vmin, 54px);
   height: 100%;
   z-index: 998;
 }
 
 #modal #modalHeader {
   font-family: LeagueSpartanBold, sans-serif;
-  font-size: max(4vw, 15px);
-  margin-bottom: max(1.2vmin, 4.5px);
+  font-size: min(4vw, 45px);
+  margin-bottom: min(1.2vmin, 13.5px);
 }
 #modal #modalText {
   font-family: LeagueSpartanLight, sans-serif;
-  font-size: max(3.2vw, 12px);
+  font-size: min(3.2vw, 36px);
 }
 
 #modal button.modalButton {
-  margin-top: max(6vmin, 22.5px);
+  margin-top: min(6vmin, 67.5px);
   margin-right: 1ch;
-  padding: max(1.2vmin, 4.5px);
+  padding: min(1.2vmin, 13.5px);
   background-color: rgba(0, 0, 0, .75);
   border: 1px solid rgba(0, 0, 0, .95);
-  border-radius: max(1vmin, 3.75px);
-  font-size: max(3.2vw, 12px);
+  border-radius: min(1vmin, 11.25px);
+  font-size: min(3.2vw, 36px);
   color: ivory;
   transition: background-color .2s ease-in;
 }
@@ -228,39 +326,84 @@ box-shadow: /* X Y Blur Color */
 #modal button.modalButton:focus {
   outline: none;
   box-shadow: /* X Y Blur Color */
-    inset 0px 0px max(1vmin, 3.75px) rgba(0, 0, 0, .75);
+    inset 0px 0px min(1vmin, 11.25px) rgba(0, 0, 0, .75);
   border: 1px solid rgba(0, 0, 0, .8);
 }
 
 #modalClose {
   background-color: rgb(255, 255, 240);
-  border-radius: max(7vmin, 26.25px); /* ((width|height) / 2) */
-  border: max(1.25vmin, 4.6875px) solid ivory; /* ((width|height - font-size) / 2) */
+  border-radius: min(7vmin, 78.75px); /* ((width|height) / 2) */
+  border: min(1.25vmin, 14.0625px) solid ivory; /* ((width|height - font-size) / 2) */
   color: black;
   position: absolute;
-  font-size: max(11.5vmin, 43.125px); /* ((width|height - (border / 2)) */
-  width: max(14vmin, 52.5px);
-  height: max(14vmin, 52.5px);
+  font-size: min(11.5vmin, 129.375px); /* ((width|height - (border / 2)) */
+  width: min(14vmin, 157.5px);
+  height: min(14vmin, 157.5px);
   display: block;
-  top: max(-3.5vmin, -13.125px); /* -(width|height / 4) */
-  right: max(-3.5vmin, -13.125px); /* -(width|height / 4) */
+  top: max(-3.5vmin, -39.375px); /* -(width|height / 4) */
+  right: max(-3.5vmin, -39.375px); /* -(width|height / 4) */
   z-index: 999;
 }
+
+@media (max-width: 380px) { /* 3x Smaller than max */
+  #modal {
+    min-width: 260px !important;
+    border-radius: 18px;
+    padding: 4.5px;
+  }
+  #modalContent {
+    font-size: 18px;
+    border-radius: 18px;
+    padding: 18px;
+  }
+  #modal #modalHeader {
+    font-size: 15px;
+    margin-bottom: 4.5px;
+  }
+  #modal #modalText {
+    font-size: 12px;
+  }
+  #modal button.modalButton {
+    margin-top: 22.5px;
+    margin-right: 1ch;
+    padding: 4.5px;
+    border-radius: 3.75px;
+    font-size: 12px;
+  }
+  #modal button.modalButton:hover,
+  #modal button.modalButton:focus {
+    box-shadow: /* X Y Blur Color */
+      inset 0px 0px 3.75px rgba(0, 0, 0, .75);
+  }
+  #modalClose {
+    border-radius: 26.25px; /* ((width|height) / 2) */
+    border: 4.6875px solid ivory; /* ((width|height - font-size) / 2) */
+    font-size: 43.125px; /* ((width|height - (border / 2)) */
+    width: 52.5px;
+    height: 52.5px;
+    top: -13.125px; /* -(width|height / 4) */
+    right: -13.125px; /* -(width|height / 4) */
+  }
+}
+
+
+
+
+
 
 /*///////////////
 / Content Boxes /
 ///////////////*/
 section.contentBox {
   font-family: LeagueSpartanLight, sans-serif;
-  width: 100%;
-  padding: max(1vw, 3.75px) max(2vw, 7.5px);
-  min-width: 380px;
-  max-width: 1000px;
+  margin: 0 auto;
+  padding: min(1vw, 10px) min(2vw, 10px);
+  max-width: 980px;
   z-index: 0;
 }
 
 section.contentBox:last-of-type {
-  margin-bottom: max(4vw, 15px);
+  margin-bottom: min(4vw, 30px);
 }
 
 section.contentBox .boxHead {
@@ -272,52 +415,52 @@ section.contentBox .boxHead {
 section.contentBox .boxTitle {
   color: rgba(255, 255, 240, .75);
   text-transform: uppercase;
-  font-size: max(2.25vw, 8.4375px);
-  line-height: max(4.266667vw, 16px);
-  padding: max(1vw, 3.75px) max(1vw, 3.75px) max(.2vw, .75px);
+  font-size: min(2.25vw, 16.875px);
+  line-height: min(4.266667vw, 32px);
+  padding: min(1vw, 7.5px) min(1vw, 7.5px) min(.2vw, 1.5px);
   float: left;
 }
 
 section.contentBox .boxHead button {
   font-family: LeagueSpartanMedium, sans-serif;
-  line-height: max(4.5vw, 16.875px);
+  line-height: min(4.5vw, 33.75px);
   color: rgba(255, 255, 240, .75);
   text-transform: uppercase;
-  font-size: max(2.25vw, 8.4375px);
+  font-size: min(2.25vw, 16.875px);
   border-left: 1px solid rgba(0, 0, 0, .3);
   background-color: rgba(0, 0, 0, .3);
-  padding: max(.8vw, 3px) max(1vw, 3.75px) max(.2vw, .75px);
+  padding: min(.8vw, 6px) min(1vw, 7.5px) min(.2vw, 1.5px);
 }
 
 section.contentBox .pageHelp {
   display: none;
-  font-size: max(3.2vw, 12px);
+  font-size: min(3.2vw, 24px);
   background-color: rgb(0, 0, 0, 0.1);
   border-right: 1px solid rgba(0, 0, 0, 0.3);
   border-left: 1px solid rgba(0, 0, 0, 0.3);
-  padding-bottom: max(1vw, 3.75px);
+  padding-bottom: min(1vw, 7.5px);
 }
 
 section.contentBox .pageHelp .closeHelp {
   color: rgba(255, 255, 240, .5);
-  margin: max(.5vw, 1.875px) max(1vw, 3.75px);
-  font-size: max(3.2vw, 12px);
+  margin: min(.5vw, 3.75px) min(1vw, 7.5px);
+  font-size: min(3.2vw, 24px);
   background: none;
   float: right;
 }
 
 section.contentBox .pageHelp p {
-  padding-top: max(1vw, 3.75px);
-  padding-right: max(1vw, 3.75px);
+  padding-top: min(1vw, 7.5px);
+  padding-right: min(1vw, 7.5px);
   padding-bottom: 0;
-  padding-left: max(1vw, 3.75px);
+  padding-left: min(1vw, 7.5px);
 }
 
 section.contentBox .boxContent {
-  font-size: max(3.2vw, 12px);
+  font-size: min(3.2vw, 24px);
   background-color: rgb(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.3);
-  padding: max(1vw, 3.75px) max(1vw, 3.75px) 0 max(1vw, 3.75px);
+  padding: min(1vw, 7.5px) min(1vw, 7.5px) 0 min(1vw, 7.5px);
 }
 
 section.contentBox .boxContent a,
@@ -355,16 +498,16 @@ section.contentBox .boxContent.scrollBox::-webkit-scrollbar-thumb {
 section.contentBox .boxContent .noteHolder {
   background-color: rgba(0, 0, 0, .05);
   border: 1px solid rgba(0, 0, 0, .3);
-  margin-bottom: max(1vw, 3.75px);
+  margin-bottom: min(1vw, 7.5px);
   /* Match padding on section.contentBox .boxContent */
 }
 
 section.contentBox .boxContent .noteTitle {
   font-family: LeagueSpartanMedium, sans-serif;
-  font-size: max(3.2vw, 12px);
+  font-size: min(3.2vw, 24px);
   display: inline-block;
   background-color: rgba(0, 0, 0, 0.3);
-  padding: max(1vw, 3.75px) max(1.2vw, 4.5px);
+  padding: min(1vw, 7.5px) min(1.2vw, 9px);
   color: ivory;
   /* AAA 7.99 */
   border-right: 3.2px solid rgba(0, 0, 0, 0.25);
@@ -372,8 +515,8 @@ section.contentBox .boxContent .noteTitle {
 }
 
 section.contentBox .boxContent .noteInfo {
-  padding: max(1vw, 3.75px) max(1.2vw, 4.5px);
-  font-size: max(3.2vw, 12px);
+  padding: min(1vw, 7.5px) min(1.2vw, 9px);
+  font-size: min(3.2vw, 24px);
 }
 
 section.contentBox .boxContent .noteInfo strong {
@@ -382,24 +525,24 @@ section.contentBox .boxContent .noteInfo strong {
 
 section.contentBox .boxContent .emptySet,
 section.contentBox .boxContent .notesComplete {
-  font-size: max(4.8vw, 18px);
-  margin: max(4.8vw, 18px);
+  font-size: min(4.8vw, 36px);
+  margin: min(4.8vw, 36px);
 }
 
 section.contentBox .boxContent .emptySet i,
 section.contentBox .boxContent .notesComplete i {
-  font-size: max(9.6vw, 36px);
-  margin-right: max(4.8vw, 18px);
+  font-size: min(9.6vw, 72px);
+  margin-right: min(4.8vw, 36px);
 }
 
 section.contentBox .boxContent button {
-  margin-top: max(1vw, 3.75px);
+  margin-top: min(1vw, 7.5px);
   margin-right: 1ch;
-  padding: max(1.2vw, 4.5px);
+  padding: min(1.2vw, 9px);
   background-color: rgb(0, 0, 0, .15);
   border: 1px solid rgba(0, 0, 0, .15);
-  border-radius: max(1vw, 3.75px);
-  font-size: max(3.2vw, 12px);
+  border-radius: min(1vw, 7.5px);
+  font-size: min(3.2vw, 24px);
   color: ivory;
 }
 
@@ -412,13 +555,13 @@ section.contentBox .boxContent button:focus {
   outline: none;
   box-shadow:
     /* X Y Blur Color */
-    0px 0px max(1vw, 3.75px) rgba(0, 0, 0, .75) inset;
+    0px 0px min(1vw, 7.5px) rgba(0, 0, 0, .75) inset;
   border: 1px solid rgba(0, 0, 0, .8);
 }
 
 section.contentBox .boxContent .bottomButtons {
   margin-top: 0;
-  padding: max(1vw, 3.75px);
+  padding: min(1vw, 7.5px);
   font-size: 0;
   /* Remove whitespace between elements */
   clear: both;
@@ -430,17 +573,106 @@ section.contentBox .boxContent .bottomButtons button {
   margin-top: 0;
 }
 
+@media (max-width: 380px) { /* 2x Smaller than max */
+  section.contentBox {
+    padding: 5px 0;
+    width: 350px;
+  }
+  section.contentBox:last-of-type {
+    margin-bottom: 15px;
+  }
+  section.contentBox .boxTitle {
+    font-size: 8.4375px;
+    line-height: 16px;
+    padding: 3.75px 3.75px .75px;
+  }
+  section.contentBox .boxHead button {
+    line-height: 16.875px;
+    font-size: 8.4375px;
+    padding: 3px 3.75px .75px;
+  }
+  section.contentBox .pageHelp {
+    font-size: 12px;
+    padding-bottom: 3.75px;
+  }
+  section.contentBox .pageHelp .closeHelp {
+    margin: 1.875px 3.75px;
+    font-size: 12px;
+  }
+  section.contentBox .pageHelp p {
+    padding-top: 3.75px;
+    padding-right: 3.75px;
+    padding-bottom: 0;
+    padding-left: 3.75px;
+  }
+  section.contentBox .boxContent {
+    font-size: 12px;
+    padding: 3.75px 3.75px 0 3.75px;
+  }
+  section.contentBox .boxContent.scrollBox {
+    max-height: 500px;
+  }
+  /* Works on Chrome/Edge/Safari */
+  section.contentBox .boxContent.scrollBox::-webkit-scrollbar {
+    width: 8px;
+  }
+  section.contentBox .boxContent.scrollBox::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+  }
+  section.contentBox .boxContent .noteHolder {
+    margin-bottom: 3.75px;
+    /* Match padding on section.contentBox .boxContent */
+  }
+  section.contentBox .boxContent .noteTitle {
+    font-size: 12px;
+    padding: 3.75px 4.5px;
+  }
+  section.contentBox .boxContent .noteInfo {
+    padding: 3.75px 4.5px;
+    font-size: 12px;
+  }
+  section.contentBox .boxContent .emptySet,
+  section.contentBox .boxContent .notesComplete {
+    font-size: 18px;
+    margin: 18px;
+  }
+  section.contentBox .boxContent .emptySet i,
+  section.contentBox .boxContent .notesComplete i {
+    font-size: 36px;
+    margin-right: 18px;
+  }
+  section.contentBox .boxContent button {
+    margin-top: 3.75px;
+    margin-right: 1ch;
+    padding: 4.5px;
+    border-radius: 3.75px;
+    font-size: 12px;
+  }
+  section.contentBox .boxContent button:hover,
+  section.contentBox .boxContent button:focus {
+    box-shadow:
+      /* X Y Blur Color */
+      0px 0px 3.75px rgba(0, 0, 0, .75) inset;
+  }
+  section.contentBox .boxContent .bottomButtons {
+    padding: 3.75px;
+  }
+}
+
+
+
+
 /*///////////////
 / Forms - Input /
 ///////////////*/
 form {
   font-size: 0;
-  /* Remove whitespace between elements */
+  /* Removes whitespace between elements */
 }
 
 form .formInput {
   display: inline-block;
-  margin: max(.3vw, 1.125px) 0;
+  margin: min(.3vw, 2.25px) 0;
 }
 
 input {
@@ -449,19 +681,18 @@ input {
   appearance: none;
   /* Reset browser styles */
   width: 25ch;
-  padding: max(.8vw, 3px) max(.8vw, 3px) 0;
-  font-size: max(3.2vw, 12px);
+  padding: min(.8vw, 6px) min(.8vw, 6px) 0;
+  font-size: min(3.2vw, 24px);
   margin: 0;
   font-family: LeagueSpartanLight, sans-serif;
   background-color: rgba(255, 255, 240, .25);
-  border: 1.2px solid rgba(0, 0, 0, .4);
+  border: 2.4px solid rgba(0, 0, 0, .4);
 }
 
 @media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
-
   .selector:not(*:root),
   input {
-    font-size: max(4.1vw, 12px);
+    font-size: min(4.1vw, 24px);
     color: rgba(0, 0, 0, .4) !important;
   }
 }
@@ -471,14 +702,14 @@ label {
   float: left;
   margin: 0;
   height: 100%;
-  width: max(30.4vw, 114px);
-  padding: max(1.125vw, 4.21875px) max(1.6vw, 6px) max(1.125vw, 4.21875px);
+  width: min(30.4vw, 228px);
+  padding: min(1.125vw, 8.4375px) min(1.6vw, 12px) min(1.125vw, 8.4375px);
   font-family: LeagueSpartanMedium, sans-serif;
   /* text-transform: uppercase; */
-  font-size: max(2.4vw, 9.11667px);
+  font-size: min(2.4vw, 18.23334px);
   background-color: rgba(0, 0, 0, .25);
-  border-right: 2.2px solid rgba(0, 0, 0, .4);
-  border-bottom: 2.2px solid rgba(0, 0, 0, .4);
+  border-right: 4.4px solid rgba(0, 0, 0, .4);
+  border-bottom: 4.4px solid rgba(0, 0, 0, .4);
   color: rgba(255, 255, 240, .75);
 }
 
@@ -490,32 +721,31 @@ section.contentBox .boxContent .formHolder {
 
 section.contentBox .boxContent .formHolder .errorMessages {
   display: none;
-  padding: max(1vw, 3.75px);
+  padding: min(1vw, 7.5px);
   background-color: rgba(0, 0, 0, .5);
   color: ivory;
   border-bottom: 1px solid rgba(0, 0, 0, .3);
 }
 
 section.contentBox .boxContent .formHolder form label {
-  width: max(30.4vw, 114px);
+  width: min(30.4vw, 228px);
   background-color: rgba(255, 255, 240, .1);
-  border-right: 1.1px solid rgba(0, 0, 0, .4);
-  border-bottom: 2.2px solid rgba(0, 0, 0, .4);
+  border-right: 2.2px solid rgba(0, 0, 0, .4);
+  border-bottom: 4.4px solid rgba(0, 0, 0, .4);
   color: rgba(255, 255, 240, .85);
   white-space: nowrap;
 }
 
 section.contentBox .boxContent .formHolder form input {
-  width: max(58.5vw, 225px);
+  width: min(58.5vw, 450px);
   background-color: rgba(255, 255, 240, .4);
-  border: 1.2px solid rgba(0, 0, 0, .4);
+  border: 2.4px solid rgba(0, 0, 0, .4);
 }
 
 @media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
-
   .selector:not(*:root),
   section.contentBox .boxContent .formHolder form input {
-    font-size: max(4.1vw, 12px);
+    font-size: min(4.1vw, 24px);
     color: rgba(0, 0, 0, .4) !important;
   }
 }
@@ -534,7 +764,7 @@ section.contentBox .boxContent .formHolder button:focus {
   outline: none;
   box-shadow:
     /* X Y Blur Color */
-    0px 0px max(1vw, 3.75px) rgba(0, 0, 0, .75) inset;
+    0px 0px min(1vw, 7.5px) rgba(0, 0, 0, .75) inset;
   border: 1px solid rgba(0, 0, 0, .4);
 }
 
@@ -544,24 +774,73 @@ section.contentBox .boxContent .formHolder .updateForm {
   background-color: rgba(0, 0, 0, .2);
   border-top: 1px solid rgba(0, 0, 0, .3);
   border-bottom: 1px solid rgba(0, 0, 0, .3);
-  padding: max(1vw, 3.75px);
+  padding: min(1vw, 7.5px);
 }
 
 section.contentBox .boxContent .formHolder .addForm {
   background-color: rgba(0, 0, 0, .2);
-  padding: max(1vw, 3.75px);
+  padding: min(1vw, 7.5px);
 }
 
-@media only screen and (min-width: 768px) {
-  /* styles for browsers larger than 768px; */
-  section.contentBox {
-    margin: 0 auto;
+@media (max-width: 380px) { /* 3x Smaller than max */
+  form .formInput {
+    margin: 1.125px 0;
+  }
+  input {
+    /* Reset browser styles */
+    width: 25ch;
+    padding: 3px 3px 0;
+    font-size: 12px;
+    border: 1.2px solid rgba(0, 0, 0, .4);
+  }
+  @media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+    .selector:not(*:root),
+    input {
+      font-size: 12px;
+    }
+  }
+  label {
+    width: 114px;
+    padding: 4.21875px 6px 4.21875px;
+    font-size: 9.11667px;
+    border-right: 2.2px solid rgba(0, 0, 0, .4);
+    border-bottom: 2.2px solid rgba(0, 0, 0, .4);
+  }
+  /* Styling for on page forms in contentBox */
+  section.contentBox .boxContent .formHolder .errorMessages {
+    padding: 3.75px;
+  }
+  section.contentBox .boxContent .formHolder form label {
+    width: 114px;
+    border-right: 1.1px solid rgba(0, 0, 0, .4);
+    border-bottom: 2.2px solid rgba(0, 0, 0, .4);
+  }
+  section.contentBox .boxContent .formHolder form input {
+    border: 1.2px solid rgba(0, 0, 0, .4);
+  }
+  section.contentBox .boxContent .formHolder .updateForm form input {
+    width: 217px;
+  }
+  section.contentBox .boxContent .formHolder .addForm form input {
+    width: 217px;
   }
 
-
-
-
-
-
-
+  @media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+    .selector:not(*:root),
+    section.contentBox .boxContent .formHolder form input {
+      font-size: 12px;
+    }
+  }
+  section.contentBox .boxContent .formHolder button:hover,
+  section.contentBox .boxContent .formHolder button:focus {
+    box-shadow:
+      /* X Y Blur Color */
+      0px 0px 3.75px rgba(0, 0, 0, .75) inset;
+  }
+  section.contentBox .boxContent .formHolder .updateForm {
+    padding: 3.75px;
+  }
+  section.contentBox .boxContent .formHolder .addForm {
+    padding: 3.75px;
+  }
 }

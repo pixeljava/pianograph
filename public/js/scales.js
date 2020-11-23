@@ -223,7 +223,7 @@ $( document ).ready(function() {
         <button id="modalCancel" class="modalButton grey right" title="Cancel">
           <i class="fas fa-times-circle"></i> Cancel
         </button>
-        `), width: 'max(80vw, 300px)'});
+        `), width: '80vw'});
       // Set event listeners to the modal buttons
       $(`button#modalConfirm:button`).off().on('click', function (e) {
         doDeleteScale(scaleId);
