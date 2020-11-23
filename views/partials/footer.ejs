@@ -3,7 +3,18 @@
 </div>
 <div id="footerLinks">
   <div class="footerLink">
-    <i class="fab fa-github"></i>
-    <p><a href="https://github.com/pixeljava/pianograph" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+    <a href="https://github.com/pixeljava/pianograph" target="_blank"
+          rel="noopener noreferrer"><i class="fab fa-github"></i>GitHub</a>
   </div>
 </div>
+<script>
+  // Check if browser is supported
+  if (window.navigator.userAgent.indexOf("Trident/") > 0){
+
+    $('body').empty().append('<div class="ieDetected">' +
+      '<p>PianoGraph uses technology that is too new for Internet Explorer. </p>' +
+      '<p>Please upgrade to, or use, a newer browser (Chrome, Firefox, Edge, etc.)</p>' +
+      '<p>We hope to see you back soon!</p>' +
+      '<div>');
+  }
+</script>

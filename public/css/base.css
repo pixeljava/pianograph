@@ -85,3 +85,23 @@ strong.really {
   font-family: 'LeagueSpartanBold', sans-serif;
   font-weight: bold;
 }
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+/* IE Browser Rejection/Redirection */
+div.ieDetected {
+  margin: 0 auto;
+  padding: 20px;
+  font-size: 18px;
+  font-family: 'LeagueSpartanBold', sans-serif;
+  font-weight: bold;
+}
+div.ieDetected p {
+  display: block;
+}

@@ -1,48 +1,10 @@
-/*//////////////////////
-/ VM Units to Px Table /
-////////////////////////
-VM    Pixel (@380px min)
-------------------------
-1   	3.75
-0.95	3.5625
-0.9	  3.375
-0.85	3.1875
-0.8   3
-0.75	2.8125
-0.7	  2.625
-0.65	2.4375
-0.6	  2.25
-0.55	2.0625
-0.5	  1.875
-0.45	1.6875
-0.4	  1.5
-0.35	1.3125
-0.3	  1.125
-0.25	0.9375
-0.2	  0.75
-0.15	0.5625
-0.1	  0.375
-0.05	0.1875
-//////////////////////*/
+/*/////////////////
+/ Header and Logo /
+/////////////////*/
 
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.left {
-  float: left;
-}
-.right {
-  float: right;
-}
-
-/*//////////////
-/ Header & Nav /
-//////////////*/
 header {
   width: 100%;
-  height: 50px;
+  height: min(14.4vmin, 70px);
   min-width: 380px;
   background-color: rgb(0, 0, 0, .13);
   border-bottom: 1px solid rgba(0, 0, 0, .13);
@@ -51,97 +13,176 @@ header {
 }
 
 header #headerText {
-  padding: 4px 8px;
+  padding: min(2.4vmin, 9px) min(4vmin, 30px);
   float: left;
-  width: 330px;
+  min-width: 326px;
   position: relative;
 }
+
 header #headerText #title {
   font-family: LeagueSpartanBold, sans-serif;
-  font-size: 44px;
+  font-size: min(9.6vmin, 48px);
   letter-spacing: -.05em;
   text-align: left;
   display: inline;
   position: relative;
 }
+
 header #headerText #description {
   font-family: LeagueSpartanMedium, sans-serif;
-  font-size: 20px;
+  font-size: min(4.8vmin, 24px);
   text-align: right;
   white-space: nowrap;
   color: ivory;
   display: inline;
-  left: 212px;
-  top: 30px;
+  left: min(48vmin, 250px);
+  top: min(8.25vmin, 38px);
   position: absolute;
 }
 
-header #navMenuButton {
+@media (max-width: 380px), (max-height: 380px) {
+  header {
+    width: 100%;
+    height: 54px;
+    max-height: 140px;
+  }
+  header #headerText {
+    padding: 9px 15px;
+    min-width: 326px;
+  }
+  header #headerText #title {
+    font-size: max(9.6vmin, 36px);
+  }
+  header #headerText #description {
+    font-size: 18px;
+    left: 180px;
+    top: 31px;
+
+  }
+}
+
+/*//////////
+/ Nav Menu /
+//////////*/
+
+#navMenu {
+  position: relative;
+}
+
+/* Nav Button */
+
+#navMenuButton {
+  position: absolute;
+  top: 0px;
+  right: 0px;
   outline: none;
   outline-offset: none;
-  height: 50px;
-  width: 50px;
+  height: min(14.4vmin, 70px);
+  min-height: 54px;
+  width: min(14.4vmin, 70px);
+  min-width: 54px;
   float: right;
   background-color: rgb(0, 0, 0, .20);
   color: ivory;
-  font-size: 40px;
-}
-header #navMenuButton:hover,
-header #navMenuButton:focus,
-header #navMenuButton.open:hover,
-header #navMenuButton.open:focus {
-  outline: 1px solid #fff;
-  outline-offset: -6px;
-}
-header #navMenuButton:active,
-header #navMenuButton.open {
-  outline: none;
-  box-shadow: /* X Y Blur Color */
-    inset 0 0 .25vw rgba(0, 0, 0, 0.75),
-    inset 0 0 .75vw rgb(0, 0, 0, .9);
+  font-size: min(12.8vmin, 54px);
 }
 
-nav#navMenu {
-  display: none;
-  font-family: LeagueSpartanBold, sans-serif;
-  position: absolute;
-  top: 50px;
-  right: 0;
-  width: 100%;
-  min-width: 200px;
-  max-width: 400px;
-  background-color: rgb(0, 0, 0, .92);
-  z-index: 999;
+#navMenuButton:hover,
+#navMenuButton:focus,
+#navMenuButton.open:hover,
+#navMenuButton.open:focus {
+  outline: 1px solid #fff;
+  outline-offset: max(-2.5vmin, -16px);
 }
-nav#navMenu ul {
-  position: relative;
-  width: 100%;
+
+#navMenuButton:active,
+#navMenuButton.open {
+  outline: none;
+  box-shadow:
+    /* X Y Blur Color */
+    inset 0 0 min(1.5vmin, 11px) rgba(0, 0, 0, 0.75),
+    inset 0 0 min(3vmin, 22px) rgb(0, 0, 0, .9);
+}
+
+/* Nav Menu */
+
+#navMenuItems {
+  display: none;
+  position: absolute;
+  width: min(30vw, 500px);
+  min-width: 380px;
+  right: 0px;
+  top: min(14.4vmin, 70px);
+  max-width: 480px;
+  background-color: rgb(0, 0, 0, .92);
+  font-family: LeagueSpartanBold, sans-serif;
+  font-size: min(3.2vw, 24px);
   color: white;
   border-top: 1px solid rgb(36, 36, 36);
   box-shadow: /* X Y Blur Color */
-    -.1vw 1vw 1vw rgba(0, 0, 0, 0.8);
-  cursor: pointer;
+    min(-.1vw, -0.64px) min(1vw, 6.4px) min(1vw, 6.4px) rgba(0, 0, 0, 0.8);
+  z-index: 999;
 }
-nav#navMenu ul li a {
-  position: relative;
-  height: 10vh;
-  min-height: 50px;
-  max-height: 80px;
-  /* text-align: center; */
+
+#navMenuItems a {
+  display: block;
+  text-align: center;
+  padding: min(4.8vmin, 18px) min(4.8vmin, 18px);
+  text-decoration: none;
   color: ivory;
   border-bottom: 1px solid rgb(36, 36, 36);
   border-left: 1px solid rgb(36, 36, 36);
   box-shadow: /* X Y Blur Color */
-    inset 0 0 4.5px rgba(255, 255, 240, 0.5),
-    inset 0 0 .65px rgb(0, 0, 0);
+    inset 0 0 min(1.2vw, 9px) rgba(255, 255, 240, 0.5),
+    inset 0 0 min(.168vw, 1.26px) rgb(0, 0, 0);
 }
-nav#navMenu ul li a:hover {
-  color: white;
-  border-bottom: 1px solid rgb(36, 36, 36);
-  border-left: 1px solid rgb(36, 36, 36);
-  box-shadow: /* X Y Blur Color */
-    inset 0 0 9px rgba(255, 255, 240, 0.8),
-    inset 0 0 .65px rgb(0, 0, 0);
+
+#navMenuItems a:hover {
+  box-shadow:
+    /* X Y Blur Color */
+    inset 0 0 min(2.4vw, 18px) rgba(255, 255, 240, 0.8),
+    inset 0 0 min(.168vw, 1.26px) rgb(0, 0, 0);
+}
+
+@media (max-width: 380px), (max-height: 380px) {
+  #navMenuButton {
+    height: 54px;
+    width: 54px;
+    font-size: 48px;
+  }
+  #navMenuButton:hover,
+  #navMenuButton:focus,
+  #navMenuButton.open:hover,
+  #navMenuButton.open:focus {
+    outline-offset: -10px;
+  }
+  #navMenuButton:active,
+  #navMenuButton.open {
+    box-shadow:
+      /* X Y Blur Color */
+      inset 0 0 1.5vmin rgba(0, 0, 0, 0.75),
+      inset 0 0 3vmin rgb(0, 0, 0, .9);
+  }
+  #navMenuItems {
+    top: 54px;
+    font-size: 12px;
+    width: 380px;
+    box-shadow: /* X Y Blur Color */
+      -0.32px 3.2px 3.2px rgba(0, 0, 0, 0.8);
+  }
+  #navMenuItems a {
+    padding: 18px 18px;
+    text-decoration: none;
+    box-shadow: /* X Y Blur Color */
+      inset 0 0 4.5px rgba(255, 255, 240, 0.5),
+      inset 0 0 .63px rgb(0, 0, 0);
+  }
+  #navMenuItems a:hover {
+    box-shadow:
+      /* X Y Blur Color */
+      inset 0 0 9px rgba(255, 255, 240, 0.8),
+      inset 0 0 .63px rgb(0, 0, 0);
+  }
 }
 
 /*///////////////
@@ -153,311 +194,73 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 20px;
+  height: min(5.6vmin, 30px);
+  min-width: 380px;
   background-color: rgba(0, 0, 0, 0.85);
+  font-size: min(2.4vmin, 12.5px);
   color: rgba(255, 255, 240, .90);
-  font-family: LeagueSpartanMedium, sans-serif;
-  font-size: 12px;
+  font-family: LeagueSpartanBold, sans-serif;
 }
+
 footer #footerText {
   float: left;
-  padding: 4px;
+  padding: min(1.7vmin, 9px);
 }
+
 footer #footerLinks {
-  font-family: LeagueSpartanLight, sans-serif;
   float: right;
-  font-size: 12px;
-  height: 20px;
   white-space: nowrap;
 }
+
 footer #footerLinks .footerLink {
   float: left;
+  line-height: min(5.8vmin, 33px);
 }
+
 footer #footerLinks .footerLink i {
-  font-size: 14px;
+  font-size: min(3.8vmin, 21.38px);
+  padding-top: min(.8vmin, 4.5px);
+  padding-right: min(1.1vmin, 12px);
   float: left;
-  padding: 3px;
 }
-footer #footerLinks .footerLink p {
+
+footer #footerLinks .footerLink a {
   float: left;
   display: block;
-  padding: 5px 8px 3px 3px;
+  padding-right: min(.7vmin, 8px);
+  padding-left: min(.35vmin, 4px);
 }
+
 footer #footerLinks .footerLink a,
 footer #footerLinks .footerLink a:visited {
   text-decoration: none;
   color: ivory;
 }
+
 footer #footerLinks .footerLink a:active,
 footer #footerLinks .footerLink a:hover {
   text-decoration: underline;
   color: ivory;
 }
-/*///////////////
-/ Content Boxes /
-///////////////*/
-section.contentBox {
-  font-family: LeagueSpartanLight, sans-serif;
-  width: 100%;
-  padding: max(1vw, 3.75px) max(2vw, 7.5px);
-  min-width: 380px;
-  z-index: 0;
-}
-section.contentBox:last-of-type {
-  margin-bottom: max(4vw, 15px);
-}
-section.contentBox .boxHead {
-  font-family: LeagueSpartanMedium, sans-serif;
-  background-color: rgba(0, 0, 0, .3);
-  border-bottom: 1px solid rgba(0, 0, 0, .1);
-}
-section.contentBox .boxTitle {
-  color: rgba(255, 255, 240, .75);
-  text-transform: uppercase;
-  font-size: max(2.25vw, 8.4375px);
-  line-height: max(4.266667vw, 16px);
-  padding: max(1vw, 3.75px) max(1vw, 3.75px) max(.2vw, .75px);
-  float: left;
-}
-section.contentBox .boxHead button {
-  font-family: LeagueSpartanMedium, sans-serif;
-  line-height: max(4.5vw, 16.875px);
-  color: rgba(255, 255, 240, .75);
-  text-transform: uppercase;
-  font-size: max(2.25vw, 8.4375px);
-  border-left: 1px solid rgba(0, 0, 0, .3);
-  background-color: rgba(0, 0, 0, .3);
-  padding: max(.8vw, 3px) max(1vw, 3.75px) max(.2vw, .75px);
-}
 
-section.contentBox .pageHelp {
-  display: none;
-  font-size: max(3.2vw, 12px);
-  background-color: rgb(0, 0, 0, 0.1);
-  border-right: 1px solid rgba(0, 0, 0, 0.3);
-  border-left: 1px solid rgba(0, 0, 0, 0.3);
-  padding-bottom: max(1vw, 3.75px);
-}
-section.contentBox .pageHelp .closeHelp {
-  color: rgba(255, 255, 240, .5);
-  margin: max(.5vw, 1.875px) max(1vw, 3.75px);
-  font-size: max(3.2vw, 12px);
-  background: none;
-  float: right;
-}
-section.contentBox .pageHelp p {
-  padding-top: max(1vw, 3.75px);
-  padding-right: max(1vw, 3.75px);
-  padding-bottom: 0;
-  padding-left: max(1vw, 3.75px);
-}
-
-section.contentBox .boxContent {
-  font-size: max(3.2vw, 12px);
-  background-color: rgb(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  padding: max(1vw, 3.75px) max(1vw, 3.75px) 0 max(1vw, 3.75px);
-}
-section.contentBox .boxContent a,
-section.contentBox .boxContent a:visited {
-  color: black;
-}
-section.contentBox .boxContent a:active,
-section.contentBox .boxContent a:hover {
-  color: ivory;
-}
-section.contentBox .boxContent.scrollBox {
-  max-height: 500px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.3) rgba(255, 255, 240, 0.3);
-}
-/* Works on Chrome/Edge/Safari */
-section.contentBox .boxContent.scrollBox::-webkit-scrollbar {
-  width: 8px;
-}
-section.contentBox .boxContent.scrollBox::-webkit-scrollbar-track {
-  background: rgba(255, 255, 240, .3);
-}
-section.contentBox .boxContent.scrollBox::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, .3);
-  border-radius: 2px;
-  border: 1px solid rgba(0, 0, 0, .3);
-}
-section.contentBox .boxContent .noteHolder {
-  background-color: rgba(0, 0, 0, .05);
-  border: 1px solid rgba(0, 0, 0, .3);
-  margin-bottom: max(1vw, 3.75px); /* Match padding on section.contentBox .boxContent */
-}
-section.contentBox .boxContent .noteTitle {
-  font-family: LeagueSpartanMedium, sans-serif;
-  font-size: max(3.2vw, 12px);
-  display: inline-block;
-  background-color: rgba(0, 0, 0, 0.3);
-  padding: max(1vw, 3.75px) max(1.2vw, 4.5px);
-  color: ivory; /* AAA 7.99 */
-  border-right: 3.2px solid rgba(0, 0, 0, 0.25);
-  border-bottom: 3.2px solid rgba(0, 0, 0, 0.25);
-}
-section.contentBox .boxContent .noteInfo {
-  padding: max(1vw, 3.75px) max(1.2vw, 4.5px);
-  font-size: max(3.2vw, 12px);
-}
-section.contentBox .boxContent .noteInfo strong {
-  font-weight: bold;
-}
-section.contentBox .boxContent .emptySet,
-section.contentBox .boxContent .notesComplete {
-  font-size: max(4.8vw, 18px);
-  margin: max(4.8vw, 18px);
-}
-section.contentBox .boxContent .emptySet i,
-section.contentBox .boxContent .notesComplete i {
-  font-size: max(9.6vw, 36px);
-  margin-right: max(4.8vw, 18px);
-}
-section.contentBox .boxContent button {
-  margin-top: max(1vw, 3.75px);
-  margin-right: 1ch;
-  padding: max(1.2vw, 4.5px);
-  background-color: rgb(0, 0, 0, .15);
-  border: 1px solid rgba(0, 0, 0, .15);
-  border-radius: max(1vw, 3.75px);
-  font-size: max(3.2vw, 12px);
-  color: ivory;
-}
-section.contentBox .boxContent .right button:last-child { 
-  margin-right: 0;
-} 
-section.contentBox .boxContent button:hover,
-section.contentBox .boxContent button:focus {
-  outline: none;
-  box-shadow: /* X Y Blur Color */
-    0px 0px max(1vw, 3.75px) rgba(0, 0, 0, .75) inset;
-  border: 1px solid rgba(0, 0, 0, .8);
-}
-
-section.contentBox .boxContent .bottomButtons {
-  margin-top: 0;
-  padding: max(1vw, 3.75px);
-  font-size: 0; /* Remove whitespace between elements */
-  clear: both;
-}
-section.contentBox .boxContent .bottomButtons button {
-  background-color: rgb(0, 0, 0, .30);
-  border: 1px solid rgba(0, 0, 0, .3);
-  margin-top: 0;
-}
-/*///////////////
-/ Forms - Input /
-///////////////*/
-form {
-  font-size: 0; /* Remove whitespace between elements */
-}
-form .formInput {
-  display: inline-block;
-  margin: max(.3vw, 1.125px) 0;
-}
-input {
-  display: block;
-  float: left;
-  appearance: none; /* Reset browser styles */
-  width: 25ch;
-  padding: max(.8vw, 3px) max(.8vw, 3px) 0;
-  font-size: max(3.2vw, 12px);
-  margin: 0;
-  font-family: LeagueSpartanLight, sans-serif;
-  background-color: rgba(255, 255, 240, .25);
-  border: 1.2px solid rgba(0, 0, 0, .4);
-}
-@media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) { 
-  .selector:not(*:root), input {
-    font-size: max(4.1vw, 12px);
-    color: rgba(0, 0, 0, .4) !important;
+@media (max-width: 380px), (max-height: 380px) {
+  footer {
+    height: 20px;
+    font-size: 9px;
   }
-}
-label {
-  display: block;
-  float: left;
-  margin: 0;
-  height: 100%;
-  width: max(30.4vw, 114px);
-  padding: max(1.125vw, 4.21875px) max(1.6vw, 6px) max(1.125vw, 4.21875px);
-  font-family: LeagueSpartanMedium, sans-serif;
-  /* text-transform: uppercase; */
-  font-size: max(2.4vw, 9.11667px);
-  background-color: rgba(0, 0, 0, .25);
-  border-right: 2.2px solid rgba(0, 0, 0, .4);
-  border-bottom: 2.2px solid rgba(0, 0, 0, .4);
-  color: rgba(255, 255, 240, .75);
-}
-
-/* Styling for on page forms in contentBox */
-section.contentBox .boxContent .formHolder {
-  /* Avoid styling the .formHolder div as it just needs to disappear by default */
-  display: block;
-}
-section.contentBox .boxContent .formHolder .errorMessages {
-  display: none;
-  padding: max(1vw, 3.75px);
-  background-color: rgba(0, 0, 0, .5);
-  color: ivory;
-  border-bottom: 1px solid rgba(0, 0, 0, .3);
-}
-section.contentBox .boxContent .formHolder form label {
-  width: max(30.4vw, 114px);
-  background-color: rgba(255, 255, 240, .1);
-  border-right: 1.1px solid rgba(0, 0, 0, .4);
-  border-bottom: 2.2px solid rgba(0, 0, 0, .4);
-  color: rgba(255, 255, 240, .85);
-  white-space: nowrap;
-}
-section.contentBox .boxContent .formHolder form input {
-  width: max(58.5vw, 225px);
-  background-color: rgba(255, 255, 240, .4);
-  border: 1.2px solid rgba(0, 0, 0, .4);
-}
-@media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) { 
-  .selector:not(*:root), section.contentBox .boxContent .formHolder form input {
-    font-size: max(4.1vw, 12px);
-    color: rgba(0, 0, 0, .4) !important;
+  footer #footerText {
+    padding: 6px;
   }
-}
-section.contentBox .boxContent .formHolder button {
-  background-color: rgb(0, 0, 0, .15);
-  border: 1px solid rgba(0, 0, 0, .15);
-}
-section.contentBox .boxContent .formHolder .right button:last-child { 
-  margin-right: 0;
-}
-section.contentBox .boxContent .formHolder button:hover,
-section.contentBox .boxContent .formHolder button:focus {
-  outline: none;
-  box-shadow: /* X Y Blur Color */
-    0px 0px max(1vw, 3.75px) rgba(0, 0, 0, .75) inset;
-  border: 1px solid rgba(0, 0, 0, .4);
-}
-/* The updateForm is hidden by default */
-section.contentBox .boxContent .formHolder .updateForm {
-  display: none;
-  background-color: rgba(0, 0, 0, .2);
-  border-top: 1px solid rgba(0, 0, 0, .3);
-  border-bottom: 1px solid rgba(0, 0, 0, .3);
-  padding: max(1vw, 3.75px);
-}
-
-section.contentBox .boxContent .formHolder .addForm {
-  background-color: rgba(0, 0, 0, .2);
-  padding: max(1vw, 3.75px);
-}
-
-@media (min-width: 800px) {
-  body {
-    /* background-color: salmon; */
+  footer #footerLinks .footerLink {
+    line-height: 22px;
   }
-}
-@media (max-width: 379px) {
-  body {
-    /* background-color: green; */
+  footer #footerLinks .footerLink i {
+    font-size: 14.25px;
+    padding-top: 3px;
+    padding-right: 6px;
+  }
+  footer #footerLinks .footerLink a {
+    padding-right: 8px;
+    padding-left: 4px;
   }
 }
