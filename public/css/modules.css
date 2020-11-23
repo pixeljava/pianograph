@@ -745,7 +745,7 @@ section.contentBox .boxContent .formHolder form input {
 @media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
   .selector:not(*:root),
   section.contentBox .boxContent .formHolder form input {
-    font-size: min(4.1vw, 24px);
+    font-size: min(4.1vw, 28px);
     color: rgba(0, 0, 0, .4) !important;
   }
 }
@@ -788,7 +788,7 @@ section.contentBox .boxContent .formHolder .addForm {
   }
   input {
     /* Reset browser styles */
-    width: 25ch;
+    width: 217px;
     padding: 3px 3px 0;
     font-size: 12px;
     border: 1.2px solid rgba(0, 0, 0, .4);
@@ -815,16 +815,6 @@ section.contentBox .boxContent .formHolder .addForm {
     border-right: 1.1px solid rgba(0, 0, 0, .4);
     border-bottom: 2.2px solid rgba(0, 0, 0, .4);
   }
-  section.contentBox .boxContent .formHolder form input {
-    border: 1.2px solid rgba(0, 0, 0, .4);
-  }
-  section.contentBox .boxContent .formHolder .updateForm form input {
-    width: 217px;
-  }
-  section.contentBox .boxContent .formHolder .addForm form input {
-    width: 217px;
-  }
-
   @media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
     .selector:not(*:root),
     section.contentBox .boxContent .formHolder form input {
