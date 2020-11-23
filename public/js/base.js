@@ -2,6 +2,6 @@
 $(function() {
   $('#navMenuButton').click( function(){
     $(this).toggleClass('open');
-    $('nav#navMenu').slideToggle(350);
+    $('nav #navMenuItems').slideToggle(350);
   });
 });
