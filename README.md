@@ -44,4 +44,4 @@ PianoGraph uses two tables root_notes and scales. If you don't want to use the M
 
 # API Endpoints
 
-Coming soon!
+View the complete API documentation at https://www.apimatic.io/api-docs/pianograph
