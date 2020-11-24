@@ -4,7 +4,7 @@ const Scales = require('../db/models/Scales');
 const router = express.Router();
 
 // GET /api/scales/
-// GET a list of all root notes when accessing <host>/api/scales/
+// GET a list of all root notes
 router.get('/', (req, res) => {
   Scales.findAll()
     .then(scales => {
@@ -16,8 +16,8 @@ router.get('/', (req, res) => {
     });
 });
 
-// GET /api/scales/{rootNoteId}
-// GET a list of a root note matching {numposition} <host>/api/rootnotes/
+// GET /api/scales/id/{rootnoteId}
+// GET a list of a root note matching {rootnoteId}
 router.get('/id/:rootNoteId', (req, res) => {
   Scales.findAll({
     where: {rootnoteId: req.params.rootNoteId}
